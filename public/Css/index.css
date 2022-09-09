@@ -1,0 +1,148 @@
+* {
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+}
+nav {
+    background-color: #c4bdbc;
+    display: flex;
+    font-weight: bold;
+    margin-top: -8px;
+    position: fixed;
+    margin-right: -px;
+    width: 100%;
+}
+.nav-item {
+    position: relative;
+}
+
+.nav-link {
+    text-decoration: none;
+    display: block;
+    padding: 20px;
+    color: black;
+}
+
+.logo {
+    width: 80px;
+    margin: 5px;
+    margin-right: 50px;
+    margin-left: 20px;
+}
+
+.nav-link:after {
+    content: "";
+    display: none;
+    height: 2px;
+    width: 100%;
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    background-color: #aca8a8;
+}
+
+.nav-link.active,
+.nav-link:hover {
+    color: #aca8a8;
+}
+
+.nav-link.active:after,
+.nav-link:hover:after {
+    display: block;
+}
+
+.nav-item:hover .nav-dropdown {
+    display: block;
+}
+
+.gambar {
+    margin-top: 8px;
+    width: 100%;
+    height: 600px;
+}
+
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    width: 100%;
+    margin-top: 6px;
+    display: grid;
+    border-radius: 2px;
+    grid-template-columns: auto auto auto;
+    background-color: #ffffff;
+}
+.card-pt3 {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    width: 100%;
+    margin-top: 6px;
+    display: grid;
+    border-radius: 2px;
+    grid-template-columns: auto auto auto;
+    background-color: #ffffff;
+}
+.card-container {
+    padding: 10px;
+    font-size: 30px;
+    text-align: center;
+    border-radius: 2px;
+  }
+.card-container-pt3{
+    padding: 10px;
+    font-size: 30px;
+    text-align: center;
+    border-radius: 2px;
+  }
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+.harga{
+    color: #f8f8f8;
+}
+/* .bag1{
+    display: flex;
+    overflow-x: scroll;
+    padding-left: 20px;
+    width: 300px;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 20px;
+    gap: 12px;
+    box-sizing: border-box;
+}
+.bag1 .card{
+    flex: 0 0 100%;
+    padding: 20px;
+    scroll-snap-align: start;
+} */
+
+.lm{
+    text-decoration: none;
+    color: black;
+}
+.button_black{
+    background-color: #000000;
+    color: rgb(255, 255, 255);
+    border: none;
+    padding: 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 20px;
+}
+.btn-2{
+    background-color: black;
+    border: none;
+    padding: 15px;
+    font-weight: bold;
+    border-radius: 3px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+}
+.img_sp{
+    height: 600px;
+    width: 100%;
+}
+.text-sp1{
+    font-size: 60px;
+    font-weight: bold;
+    margin: 100px;
+}
