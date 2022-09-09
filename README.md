@@ -13,5 +13,5 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 - Setelah proses clone berhasil, buka folder project di directory anda
 - Buka terminal dan arahkan ke folder project
 - Jalankan project dengan menjalankan perintah : `php artisan serve`
-- Buka [(http://127.0.0.1:8000/)]di browser
+- Buka http://127.0.0.1:8000/ di browser
 - Project berhasil dijalankan
