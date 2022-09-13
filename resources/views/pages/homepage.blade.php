@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('title')
-    hompage
+    Dashboard
 @endsection
 @section('content')
     <div id="carouselExampleCaptions" class="carousel slide" style="height: 50%" data-bs-ride="false">

@@ -14,3 +14,12 @@
         });
     }
 </script>
+<script>
+    const search = document.querySelector('.search')
+    const btn = document.querySelector('.btns')
+    const input = document.querySelector('.input')
+    btn.addEventListener('click', () => {
+        search.classList.toggle('active')
+        input.focus()
+    })
+</script>
