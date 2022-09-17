@@ -1,4 +1,4 @@
-<div class="navigation">
+<div class="navigation mb-3">
     <nav class="navbar navbar-expand-lg bg-light fixed-top w-100 shadow">
         <div class="container-fluid">
             <a class="navbar-brand" href="#"><img src="{{ asset('Image/logo.png') }}" class="logo" alt=""
@@ -10,7 +10,7 @@
             <div class="collapse navbar-collapse " id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link text-dark active" href="#">Home</a>
+                        <a class="nav-link text-dark active" href="{{'/'}}">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" href="#trending">Trending</a>
@@ -26,6 +26,9 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="{{'kelola-product'}}">Kelola Product</a>
+                    </li>
                     <li class="nav-item ml-3">
                         <a class="nav-link text-dark " href="#loginModal" data-bs-toggle="modal"
                             data-bs-target="#loginModal"><i class="fa-solid fa-user"></i> Login</a>

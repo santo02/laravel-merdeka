@@ -35,34 +35,24 @@
     <div class="trending mb-4 mt-4" id="trending">
         <h2 class="m-4">Trending Styles</h2>
         <div class="bag1 row d-flex justify-content-around">
-            <div class="card col-lg-3 m-2" style="width: 18rem;">
-                <img src="{{ asset('Image/product2.jpg') }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's content.</p>
+            @foreach ($trending as $t)
+                <div class="card col-lg-3 m-2" style="width: 18rem;">
+                    <img src="{{ Storage::url($t->gambar) }}"class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <b>
+                            <p class="card-text">{{ $t->nama_product }}</p>
+                        </b>
+                        <p class="card-text">{{ $t->deskripsi_product }}</p>
+                        <p class="terjual">Terjual : {{ $t->terjual }}</p>
+                        <p class="stok">Stok : {{ $t->stok_product }}</p>
+                        <b>
+                            <h5 class="harga">Rp.{{ $t->harga_product }}</h5>
+                        </b>
+
+
+                    </div>
                 </div>
-            </div>
-            <div class="card col-md-3 m-2" style="width: 18rem;">
-                <img src="{{ asset('Image/product2.jpg') }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's content.</p>
-                </div>
-            </div>
-            <div class="card col-md-3 m-2" style="width: 18rem;">
-                <img src="{{ asset('Image/product2.jpg') }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's content.</p>
-                </div>
-            </div>
-            <div class="card col-md-3 m-2" style="width: 18rem;">
-                <img src="{{ asset('Image/product2.jpg') }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's content.</p>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
     <div class="sp1 m-3 shadow-lg">
@@ -83,34 +73,24 @@
     <div class="Pria mb-4" id="pria">
         <h2 class="m-4">Pria Styles</h2>
         <div class="bag1 row d-flex justify-content-around">
-            <div class="card col-lg-3 m-2" style="width: 18rem;">
-                <img src="{{ asset('Image/product6.jpg') }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's content.</p>
+            @foreach ($pria as $p)
+                <div class="card col-lg-3 m-2" style="width: 18rem;">
+                    <img src="{{ Storage::url($p->gambar) }}"class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <b>
+                            <p class="card-text">{{ $p->nama_product }}</p>
+                        </b>
+                        <p class="card-text">{{ $p->deskripsi_product }}</p>
+                        <p class="terjual">Terjual : {{ $p->terjual }}</p>
+                        <p class="stok">Stok : {{ $p->stok_product }}</p>
+                        <b>
+                            <h5 class="harga">Rp.{{ $p->harga_product }}</h5>
+                        </b>
+
+
+                    </div>
                 </div>
-            </div>
-            <div class="card col-lg-3 m-2" style="width: 18rem;">
-                <img src="{{ asset('Image/product6.jpg') }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's content.</p>
-                </div>
-            </div>
-            <div class="card col-lg-3 m-2" style="width: 18rem;">
-                <img src="{{ asset('Image/product6.jpg') }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's content.</p>
-                </div>
-            </div>
-            <div class="card col-lg-3 m-2" style="width: 18rem;">
-                <img src="{{ asset('Image/product6.jpg') }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's content.</p>
-                </div>
-            </div>
+            @endforeach
 
         </div>
     </div>
@@ -133,45 +113,23 @@
     <div class="wanita mb-4 " id="wanita">
         <h2 class="m-4">Wanita</h2>
         <div class="bag1 row d-flex justify-content-around">
-            <div class="card col-lg-3 m-2" style="width: 18rem;">
-                <img src="{{ asset('Image/product5.jpg') }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <b>
-                        <p>Chuck 70 Wanita</p>
-                    </b>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's content.</p>
+            @foreach ($wanita as $w)
+                <div class="card col-lg-3 m-2" style="width: 18rem;">
+                    <img src="{{ Storage::url($w->gambar) }}"class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <b>
+                            <p class="card-text">{{ $w->nama_product }}</p>
+                        </b>
+                        <p class="card-text">{{ $w->deskripsi_product }}</p>
+                        <p class="terjual">Terjual : {{ $w->terjual }}</p>
+                        <p class="stok">Stok : {{ $w->stok_product }}</p>
+                        <b>
+                            <h5 class="harga">Rp.{{ $w->harga_product }}</h5>
+                        </b>
+
+
+                    </div>
                 </div>
-            </div>
-            <div class="card col-lg-3 m-2" style="width: 18rem;">
-                <img src="{{ asset('Image/product5.jpg') }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <b>
-                        <p>Chuck 70 Wanita</p>
-                    </b>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's content.</p>
-                </div>
-            </div>
-            <div class="card col-lg-3 m-2" style="width: 18rem;">
-                <img src="{{ asset('Image/product5.jpg') }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <b>
-                        <p>Chuck 70 Wanita</p>
-                    </b>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's content.</p>
-                </div>
-            </div>
-            <div class="card col-lg-3 m-2" style="width: 18rem;">
-                <img src="{{ asset('Image/product5.jpg') }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <b>
-                        <p>Chuck 70 Wanita</p>
-                    </b>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's content.</p>
-                </div>
-            </div>
+            @endforeach
         </div>
     @endsection
