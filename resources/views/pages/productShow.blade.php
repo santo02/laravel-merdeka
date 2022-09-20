@@ -4,14 +4,20 @@
 @endsection
 @section('content')
     <div class="container mb-4 mt-4">
+
         <h2 class="m-4">Semua Product</h2>
         <div class="bag1 row d-flex justify-content-around">
+            @if ($message = Session::get('success'))
+                <div class="alert alert-success">
+                    <p>{{ $message }}</p>
+                </div>
+            @endif
             @foreach ($product as $p)
                 <div class="card col-lg-3 m-2 mt-4" style="width: 18rem;">
                     <img src="{{ Storage::url($p->gambar) }}"class="card-img-top" alt="...">
                     <div class="card-body">
                         <b>
-                            <p class="card-text">{{ $p->nama_product }}</p>
+                            <p class="card-text">{{ $p->nama_product }}({{$p->kategory}})</p>
                         </b>
                         <p class="card-text">{{ $p->deskripsi_product }}</p>
                         <p class="terjual">Terjual : {{ $p->terjual }}</p>
@@ -37,7 +43,7 @@
                                         </div>
                                         <div class="modal-bodys p-3">
                                             <div class="form">
-                                                <form action="edit-product/{{ $p->id }}" method="POST"
+                                                <form action="/edit-product/{{ $p->id }}" method="POST"
                                                     enctype="multipart/form-data">
                                                     @csrf
                                                     <div class="mb-3">
@@ -114,7 +120,7 @@
                                             <button type="button" class="btn btn-primary"
                                                 data-bs-dismiss="modal">Tidak</button>
                                             {{-- <a href={{route('delete-product', [$p->id])}}> --}}
-                                            <a href="{{ url('delete-product', $p->id )}}">
+                                            <a href='/delete-product/{{ $p->id }}'>
                                                 <button type="button" class="btn btn-danger">Ya</button>
                                             </a>
                                         </div>

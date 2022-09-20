@@ -78,14 +78,15 @@ class productController extends Controller
         $p->save();
 
 
-        return redirect()->route('index-product')
+        return redirect()->route('show-product')
             ->with('success', 'Product has been edited successfully.');
     }
 
     public function destroy($id)
     {
-
         product::where('id', $id)->delete();
-        return back()->with('success', 'Berhasil Menghapus!');
+        
+        return redirect()->route('show-product')
+            ->with('success', 'Product has been Deleted successfully.');
     }
 }
