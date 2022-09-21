@@ -6,24 +6,22 @@ use App\Models\product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use function GuzzleHttp\Promise\all;
+
 class DashboardController extends Controller
 {
     public function index()
     {
-        $pria = DB::table('products')
-        ->where('kategory', 'pria')
-        ->get('products.*');
+        $pria = product::with('Kategori')->where('kategori_id', '1')->get();
 
-        $wanita = DB::table('products')
-        ->where('kategory', 'wanita')
-        ->get('products.*');
+        $wanita = product::with('Kategori')->where('kategori_id', '2')->get();
 
-
-        $trending = DB::table('products')
+        $trending = product::with('Kategori')
         ->orderBy('terjual', 'DESC')
         ->limit(4)
-        ->get('products.*');
+        ->get();
 
         return view('pages.homepage', ["pria"=> $pria, "wanita" => $wanita, "trending" => $trending]);
+        // return view('pages.homepage', ["pria"=> $pria]);
     }
 }

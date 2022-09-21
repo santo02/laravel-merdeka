@@ -40,7 +40,7 @@
                     <img src="{{ Storage::url($t->gambar) }}"class="card-img-top" alt="...">
                     <div class="card-body">
                         <b>
-                            <p class="card-text">{{ $t->nama_product }} ({{$t->kategory}})</p>
+                            <p class="card-text">{{ $t->nama_product }} ({{$t->Kategori->nama}})</p>
                         </b>
                         <p class="card-text">{{ $t->deskripsi_product }}</p>
                         <p class="terjual">Terjual : {{ $t->terjual }}</p>
@@ -78,7 +78,7 @@
                     <img src="{{ Storage::url($p->gambar) }}"class="card-img-top" alt="...">
                     <div class="card-body">
                         <b>
-                            <p class="card-text">{{ $p->nama_product }} ({{$p->kategory}})</p>
+                            <p class="card-text">{{ $p->nama_product }} ({{$p->Kategori->nama}})</p>
                         </b>
                         <p class="card-text">{{ $p->deskripsi_product }}</p>
                         <p class="terjual">Terjual : {{ $p->terjual }}</p>
@@ -118,7 +118,7 @@
                     <img src="{{ Storage::url($w->gambar) }}"class="card-img-top" alt="...">
                     <div class="card-body">
                         <b>
-                            <p class="card-text">{{ $w->nama_product }} ({{$w->kategory}})</p>
+                            <p class="card-text">{{ $w->nama_product }} ({{$w->kategori->nama}})</p>
                         </b>
                         <p class="card-text">{{ $w->deskripsi_product }}</p>
                         <p class="terjual">Terjual : {{ $w->terjual }}</p>

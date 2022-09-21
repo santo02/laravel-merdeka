@@ -17,7 +17,7 @@
                     <img src="{{ Storage::url($p->gambar) }}"class="card-img-top" alt="...">
                     <div class="card-body">
                         <b>
-                            <p class="card-text">{{ $p->nama_product }}({{$p->kategory}})</p>
+                            <p class="card-text">{{ $p->nama_product }}({{ $p->kategori->nama }})</p>
                         </b>
                         <p class="card-text">{{ $p->deskripsi_product }}</p>
                         <p class="terjual">Terjual : {{ $p->terjual }}</p>
@@ -76,12 +76,19 @@
                                                         <select class="form-select" name="kategori"
                                                             aria-label="Default select example">
                                                             <option selected>Pilih Kategori</option>
-                                                            <option value="pria"
-                                                                @if ($p->kategory == 'pria') selected @endif>Pria
+                                                            @foreach ($kategori as $k)
+                                                                <option value="{{ $k->id }}"
+                                                                    @if ($k->nama == $p->kategori->nama) selected  @endif>
+                                                                    {{ $k->nama }}
+                                                                </option>
+                                                            @endforeach
+                                                            {{-- <option selected>Pilih Kategori</option>
+
+
                                                             </option>
                                                             <option value="wanita"
                                                                 @if ($p->kategory == 'wanita') selected @endif>Wanita
-                                                            </option>
+                                                            </option> --}}
                                                         </select>
                                                     </div>
                                                     <div class="mb-3">

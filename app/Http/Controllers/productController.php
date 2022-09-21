@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kategori;
 use App\Models\product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -10,15 +11,20 @@ class productController extends Controller
 {
     public function index()
     {
-        $product = DB::table('products')
-            ->get('products.*');
-        return view('pages.kelolaProduct', ["product" => $product]);
+
+        $kategori = product::with('Kategori')
+        ->join('kategoris', 'kategoris.id','=', 'products.kategori_id')
+        ->get();
+
+        return view('pages.kelolaProduct', ["kategori" => $kategori]);
     }
     public function show()
     {
-        $product = DB::table('products')
-            ->get('products.*');
-        return view('pages.productShow', ["product" => $product]);
+        $kategori = Kategori::all();
+
+        $product = product::with('Kategori')->get();
+
+        return view('pages.productShow', ["product" => $product, "kategori" => $kategori]);
     }
     public function store(Request $request)
     {
@@ -39,7 +45,7 @@ class productController extends Controller
         $p->stok_product = $request->stok;
         $p->terjual = $request->terjual;
         $p->deskripsi_product = $request->deskripsi;
-        $p->kategory = $request->kategori;
+        $p->kategori_id = $request->kategori;
         $p->gambar = $path;
         $p->save();
 
@@ -74,7 +80,7 @@ class productController extends Controller
         $p->stok_product = $request->stok;
         $p->terjual = $request->terjual;
         $p->deskripsi_product = $request->deskripsi;
-        $p->kategory = $request->kategori;
+        $p->kategori_id = $request->kategori;
         $p->save();
 
 
@@ -85,7 +91,7 @@ class productController extends Controller
     public function destroy($id)
     {
         product::where('id', $id)->delete();
-        
+
         return redirect()->route('show-product')
             ->with('success', 'Product has been Deleted successfully.');
     }

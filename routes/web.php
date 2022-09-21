@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\kategoriController;
 use App\Http\Controllers\productContrller;
 use App\Http\Controllers\productController;
 use Illuminate\Support\Facades\Route;
@@ -22,7 +23,11 @@ Route::get('kelola-product', [productController::class, 'index'])->name('index-p
 Route::get('show-product', [productController::class, 'show'])->name('show-product');
 Route::post('/edit-product/{id}', [productController::class, 'update'])->name('edit-product');
 Route::post('add-product', [productController::class, 'store'])->name('add-product');
+
 Route::get('/delete-product/{id}', [productController::class, 'destroy'])->name('delete-product');
+
+Route::post('add-kategori', [kategoriController::class, 'store'])->name('add-kategori');
+Route::get('kategori', [kategoriController::class, 'index'])->name('show-kategori');
 
 
 Route::get('/test', function () {
