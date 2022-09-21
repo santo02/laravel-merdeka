@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 17, 2022 at 09:30 AM
+-- Generation Time: Sep 21, 2022 at 07:25 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.0.12
 
@@ -40,6 +40,29 @@ CREATE TABLE `failed_jobs` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `kategoris`
+--
+
+CREATE TABLE `kategoris` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `nama` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `kategoris`
+--
+
+INSERT INTO `kategoris` (`id`, `nama`, `created_at`, `updated_at`) VALUES
+(1, 'pria', NULL, NULL),
+(2, 'wanita\r\n', NULL, NULL),
+(3, 'anak', '2022-09-21 10:06:55', '2022-09-21 10:06:55'),
+(4, 'remaja', '2022-09-21 10:09:53', '2022-09-21 10:09:53');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `migrations`
 --
 
@@ -58,7 +81,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (2, '2014_10_12_100000_create_password_resets_table', 1),
 (3, '2019_08_19_000000_create_failed_jobs_table', 1),
 (4, '2019_12_14_000001_create_personal_access_tokens_table', 1),
-(5, '2022_09_15_131951_create_products_table', 1);
+(5, '2022_09_15_131951_create_products_table', 1),
+(6, '2022_09_21_144200_create_kategoris_table', 1);
 
 -- --------------------------------------------------------
 
@@ -104,7 +128,7 @@ CREATE TABLE `products` (
   `stok_product` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `terjual` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `gambar` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `kategory` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `kategori_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `deskripsi_product` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -114,15 +138,10 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `nama_product`, `harga_product`, `stok_product`, `terjual`, `gambar`, `kategory`, `deskripsi_product`, `created_at`, `updated_at`) VALUES
-(1, 'sepatu 1', '199999', '20', '2', 'public/images/yewnR6gu6jo8uVf3nSbk7Cizw6e88e7omptWFiBz.jpg', 'pria', 'ini adalah deskripsi sepatu 1', '2022-09-15 22:56:13', '2022-09-15 22:56:13'),
-(2, 'CHUCK TAYLOR ALL STAR DESERT', '1199998', '50', '10', 'public/images/PKIj4HHeVBeRIOFpXIv8Aik05r597vPon8ZHciqv.jpg', 'wanita', 'BUNGA GURUN. Mengambil inspirasi dari lanskap gurun, Chucks high-top ini memadukan warna netral lembut dengan motif bunga bermotif gelombang panas', '2022-09-16 06:32:05', '2022-09-16 06:32:05'),
-(3, 'Run Star Hike Desert Rave Platform', '1499000', '50', '20', 'public/images/tFnBKdvCNkTlw5iM3IOjl9Wry77DbUCmoJUZIMv4.jpg', 'wanita', 'Run Star Hike yang menjadi favorit penggemar mendapatkan sentuhan yang terinspirasi dari alam, dengan warna-warna bersahaja dan bunga gurun yang bermekaran', '2022-09-16 07:07:33', '2022-09-16 07:07:33'),
-(4, 'CHUCK TAYLOR ALL STAR WAVE ULTRA EASY ON', '559000', '90', '12', 'public/images/ZsMaaMZWLgoCSw2hEfHQhRTHBPEu6FrVeryoe1ej.jpg', 'wanita', 'Converse Chuck Taylor All Star Wave Ultra membuat ulang kanvas stretch dinamis menjadi gaya yang benar-benar baru dan mengutamakan kenyamanan.', '2022-09-16 07:08:49', '2022-09-16 07:08:49'),
-(5, 'Converse Chuck Taylor All Star Wave Ultra membuat ulang kanvas stretch dinamis menjadi gaya yang benar-benar baru dan mengutamakan kenyamanan.', '1199000', '100', '25', 'public/images/zTtTHV4sYU3wI0ygzG8DcJAje6KhsDfiqLSrhYZ1.jpg', 'wanita', 'Dirancang untuk kebebasan bergerak tertinggi, platform ringan ini siap membawa penampilanmu ke level berikutnya.', '2022-09-16 07:09:59', '2022-09-16 07:09:59'),
-(6, 'Chuck 70 Plus Canvas', '499999', '80', '20', 'public/images/IkJlMq7nFsqJxIzXR0iIZ2qIUAMFDuoPA0dA0BuC.jpg', 'pria', 'GAYA YANG TAK TERHENTIKAN. Pembaruan tak terduga pada klasik sepanjang masa, Chuck 70 Plus memadukan fitur ikonik dengan gaya masa depan.', '2022-09-16 07:11:41', '2022-09-16 07:11:41'),
-(7, 'Chuck 70 See Beyond', '1299000', '50', '30', 'public/images/UqGeykIw5KnjwFo03dwgOHPlsCC07reij285DfD7.jpg', 'pria', 'Melihat semangat dan sikap budaya rave, Chuck 70 ini mengambil inspirasi tahun 90-an dan kemudian mengarah ke masa depan.', '2022-09-16 07:13:36', '2022-09-16 07:13:36'),
-(8, 'Chuck 70 Mule Recycled Canvas', '1199000', '90', '23', 'public/images/EE2C99rcJWBybii8zKJXTRDFhDnOSA9eKt0U2kOa.jpg', 'pria', 'Sepatu premium, slip-on dengan 100% kanvas hewan peliharaan daur ulang atas', '2022-09-16 07:14:46', '2022-09-16 07:14:46');
+INSERT INTO `products` (`id`, `nama_product`, `harga_product`, `stok_product`, `terjual`, `gambar`, `kategori_id`, `deskripsi_product`, `created_at`, `updated_at`) VALUES
+(1, 'sepatu 1', '1200000', '102', '11', 'public/images/OBVu24rNHHckFWKFc8V70iFSDRowVCYGge4OlLQu.jpg', '1', 'ini adalah deskripsi', '2022-09-21 08:45:25', '2022-09-21 09:42:25'),
+(2, 'sepatu 2', '999999', '90', '10', 'public/images/8m7pqcQh815iCBqrU81UE6MV1Xy5xOfzbnzAtjkx.jpg', '2', 'ini adalah deskripsi', '2022-09-21 09:08:26', '2022-09-21 09:08:26'),
+(3, 'sepatu 3', '9000000', '90', '12', 'public/images/ZqZHSxspT8b1N5Rd3sNLHfCIT53iRGmgvvKx8Vqw.jpg', '1', 'ini adalah deskripsi product sepatu 3', '2022-09-21 09:43:37', '2022-09-21 09:43:37');
 
 -- --------------------------------------------------------
 
@@ -151,6 +170,13 @@ CREATE TABLE `users` (
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
+
+--
+-- Indexes for table `kategoris`
+--
+ALTER TABLE `kategoris`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `kategoris_nama_unique` (`nama`);
 
 --
 -- Indexes for table `migrations`
@@ -196,10 +222,16 @@ ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `kategoris`
+--
+ALTER TABLE `kategoris`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -211,7 +243,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
