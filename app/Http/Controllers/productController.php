@@ -11,17 +11,17 @@ class productController extends Controller
 {
     public function index()
     {
-
-        $kategori = product::with('Kategori')
-        ->join('kategoris', 'kategoris.id','=', 'products.kategori_id')
-        ->get();
+        //Raw query
+        $kategori = DB::select('select nama, id from kategoris');
 
         return view('pages.kelolaProduct', ["kategori" => $kategori]);
     }
     public function show()
     {
-        $kategori = Kategori::all();
+        //Raw query
+        $kategori = DB::select('select nama, id from kategoris');
 
+        //eloquent
         $product = product::with('Kategori')->get();
 
         return view('pages.productShow', ["product" => $product, "kategori" => $kategori]);

@@ -14,6 +14,7 @@ class Kategori extends Model
     ];
 
     public function product(){
+        // eloquent
         return $this->hasMany(product::class);
     }
 }

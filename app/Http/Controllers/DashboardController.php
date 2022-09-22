@@ -12,6 +12,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        //ORM
         $pria = product::with('Kategori')->where('kategori_id', '1')->get();
 
         $wanita = product::with('Kategori')->where('kategori_id', '2')->get();
