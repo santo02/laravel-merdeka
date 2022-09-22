@@ -46,7 +46,7 @@
                         <p class="terjual">Terjual : {{ $t->terjual }}</p>
                         <p class="stok">Stok : {{ $t->stok_product }}</p>
                         <b>
-                            <h5 class="harga">Rp.{{ $t->harga_product }}</h5>
+                            <h5 class="harga">Rp.{{ number_format($t->harga_product, 2) }}</h5>
                         </b>
 
 
@@ -84,7 +84,7 @@
                         <p class="terjual">Terjual : {{ $p->terjual }}</p>
                         <p class="stok">Stok : {{ $p->stok_product }}</p>
                         <b>
-                            <h5 class="harga">Rp.{{ $p->harga_product }}</h5>
+                            <h5 class="harga">Rp.{{ number_format($p->harga_product, 2) }}</h5>
                         </b>
 
 
@@ -124,7 +124,7 @@
                         <p class="terjual">Terjual : {{ $w->terjual }}</p>
                         <p class="stok">Stok : {{ $w->stok_product }}</p>
                         <b>
-                            <h5 class="harga">Rp.{{ $w->harga_product }}</h5>
+                            <h5 class="harga">Rp.{{ number_format($w->harga_product, 2) }}</h5>
                         </b>
 
 
