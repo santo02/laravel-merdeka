@@ -16,13 +16,4 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 - Jalankan project dengan menjalankan perintah : `php artisan serve`
 - Buka http://127.0.0.1:8000/ di browser
 - Project berhasil dijalankan
-- 
-
-### Raw Query 
-<img src="public\Image\ss1.jpg" alt="raw query">
-
-### Eloquent
-<img src={{ asset('Image/ss2.jpg') }}>
-
-### Query Builder
-<img src="{{ asset('Image/ss3.jpg') }}">
+  
