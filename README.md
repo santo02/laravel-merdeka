@@ -19,7 +19,7 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 - 
 
 ### Raw Query 
-<img src={{ asset('Image/ss1.jpg') }}>
+<img src="public\Image\ss1.jpg" alt="raw query">
 
 ### Eloquent
 <img src={{ asset('Image/ss2.jpg') }}>
