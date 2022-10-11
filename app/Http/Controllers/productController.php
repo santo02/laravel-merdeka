@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class productController extends Controller
 {
+
     public function index()
     {
         //Raw query

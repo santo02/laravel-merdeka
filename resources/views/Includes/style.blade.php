@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="{{ mix('css/app.css') }}'" />
 <link rel="icon" type="image/x-icon" href="{{ asset('/image/logo.png') }}">
 <link rel="stylesheet" href="{{ asset('Css/index.css') }}">
 <link rel="preconnect" href="https://fonts.googleapis.com">

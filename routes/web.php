@@ -29,6 +29,6 @@ Route::post('add-kategori', [kategoriController::class, 'store'])->name('add-kat
 Route::get('kategori', [kategoriController::class, 'index'])->name('show-kategori');
 
 
-// Route::get('/test', function () {
-
-// });
+Route::get('/{any}', function(){
+  return view('layouts.index');
+})->where('any','.*');

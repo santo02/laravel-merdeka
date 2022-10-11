@@ -1,14 +1,34 @@
 {
     "private": true,
     "scripts": {
-        "dev": "vite",
-        "build": "vite build"
+        "test:unit": "vue-cli-service test:unit",
+        "dev": "npm run development",
+        "development": "mix",
+        "hot": "mix watch --hot",
+        "prod": "npm run production",
+        "production": "mix --production",
+        "watch": "mix watch",
+        "watch-poll": "mix watch -- --watch-options-poll=1000"
     },
     "devDependencies": {
-        "axios": "^0.27",
-        "laravel-vite-plugin": "^0.6.0",
+        "@vue/cli-plugin-unit-jest": "^4.5.17",
+        "@vue/test-utils": "^1.3.0",
+        "axios": "^0.25",
+        "eslint": "^8.12.0",
+        "eslint-plugin-vue": "^8.5.0",
+        "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
         "postcss": "^8.1.14",
-        "vite": "^3.0.0"
+        "sass": "^1.49.9",
+        "sass-loader": "^12.6.0",
+        "vue": "^2.6.14",
+        "vue-loader": "^15.9.8",
+        "vue-router": "^3.5.3",
+        "vue-template-compiler": "^2.6.14"
+    },
+    "dependencies": {
+        "@vue/cli-service": "^4.5.17",
+        "vue-meta": "^2.4.0",
+        "vuex": "3.1.1"
     }
 }
