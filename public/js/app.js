@@ -2345,9 +2345,121 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   metaInfo: {
     title: 'Converse | Dashboard'
+  },
+  data: function data() {
+    return {
+      kategori: [],
+      products: {},
+      preview: null,
+      image: null
+    };
+  },
+  methods: {
+    showKategori: function showKategori() {
+      var _this = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('api/kategori').then(function (response) {
+        _this.kategori = response.data;
+      });
+    },
+    filegambar: function filegambar(event) {
+      // console.log('gambar')
+      this.image = event.target.files[0]; //mengubah file menjadi URL
+
+      this.preview = URL.createObjectURL(this.image);
+    },
+    store: function store() {
+      var form = document.getElementById('form');
+      var formData = new FormData();
+      formData.append('gambar', this.image);
+
+      _.each(this.products, function (value, key) {
+        formData.append(key, value);
+      });
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/add-product', formData).then(function (response) {
+        event.preventDefault();
+        form.reset();
+        console.log(response.data);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.showKategori();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/src/pages/editProduct.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/src/pages/editProduct.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  metaInfo: {
+    title: 'Converse | Edit product'
+  },
+  data: function data() {
+    return {
+      product: {
+        nama_product: ""
+      },
+      kategori: {},
+      preview: null,
+      image: null
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    axios.get("/api/product/edit/".concat(this.$route.params.id)).then(function (response) {
+      _this.product = response.data;
+    });
+  },
+  methods: {
+    updateProduct: function updateProduct() {
+      var _this2 = this;
+
+      axios.post("api/product/update/".concat(this.$route.params.id), this.product).then(function (res) {
+        _this2.$router.push({
+          name: 'product'
+        });
+
+        console.log(res.message);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    showKategori: function showKategori() {
+      var _this3 = this;
+
+      axios.get('/api/kategori').then(function (response) {
+        _this3.kategori = response.data;
+      });
+    },
+    filegambar: function filegambar(event) {
+      this.image = event.target.files[0]; //mengubah file menjadi URL
+
+      this.preview = URL.createObjectURL(this.image);
+    }
+  },
+  mounted: function mounted() {
+    this.showKategori();
   }
 });
 
@@ -2380,6 +2492,69 @@ __webpack_require__.r(__webpack_exports__);
     'card-pria': _component_card_pria_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     'card-wanita': _component_card_wanita_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
     'card-trending': _component_card_trending_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/src/pages/product.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/src/pages/product.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  metaInfo: {
+    title: 'Converse | Products'
+  },
+  data: function data() {
+    return {
+      product: {
+        id: '',
+        nama_product: '',
+        harga_product: '',
+        terjual: '',
+        stok_product: '',
+        deskripsi_product: '',
+        gambar: '',
+        nama: ''
+      },
+      kategori: []
+    };
+  },
+  methods: {
+    showProduct: function showProduct() {
+      var _this = this;
+
+      axios.get('/api/product/show').then(function (response) {
+        _this.product = response.data;
+      });
+    },
+    showKategori: function showKategori() {
+      var _this2 = this;
+
+      axios.get('/api/kategori').then(function (response) {
+        _this2.kategori = response.data;
+      });
+    } // updateProduct(id) {
+    //     axios.put('/api/product/update/' + this.product.id)
+    //         .then(response => {
+    //             // console.log(this.product)
+    //             this.product = response.data;
+    //             console.log(this.product)
+    //             // this.$router.push({ name: 'product' });
+    //         });
+    // }
+
+  },
+  mounted: function mounted() {
+    this.showProduct();
+    this.showKategori();
   }
 });
 
@@ -2442,7 +2617,7 @@ var render = function render() {
     }, [_c("img", {
       staticClass: "card-img-top",
       attrs: {
-        src: "".concat(pria.gambar),
+        src: "/images/" + pria.gambar,
         alt: "..."
       }
     }), _vm._v(" "), _c("div", {
@@ -2497,7 +2672,7 @@ var render = function render() {
     }, [_c("img", {
       staticClass: "card-img-top",
       attrs: {
-        src: "".concat(trending.gambar),
+        src: "/images/" + trending.gambar,
         alt: "..."
       }
     }), _vm._v(" "), _c("div", {
@@ -2552,7 +2727,7 @@ var render = function render() {
     }, [_c("img", {
       staticClass: "card-img-top",
       attrs: {
-        src: "".concat(wanita.gambar),
+        src: "/images/" + wanita.gambar,
         alt: "..."
       }
     }), _vm._v(" "), _c("div", {
@@ -2639,7 +2814,7 @@ var render = function render() {
   }, [_c("a", {
     staticClass: "nav-link text-dark",
     attrs: {
-      href: "/#pria"
+      href: "#pria"
     }
   }, [_vm._v("Pria")])]), _vm._v(" "), _c("li", {
     staticClass: "nav-item"
@@ -2931,13 +3106,6 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _vm._m(0);
-};
-
-var staticRenderFns = [function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
   return _c("div", {
     staticClass: "container product"
   }, [_c("div", {
@@ -2946,10 +3114,24 @@ var staticRenderFns = [function () {
     staticClass: "col-md-7"
   }, [_c("div", {
     staticClass: "form"
-  }, [_c("a", [_vm._v("Lihat semua product")]), _vm._v(" "), _c("h1", [_vm._v("Tambah Product ")]), _vm._v(" "), _c("form", {
+  }, [_c("a", [_c("router-link", {
+    staticClass: "nav-link",
     attrs: {
-      method: "POST",
-      enctype: "multipart/form-data"
+      to: {
+        name: "product"
+      }
+    }
+  }, [_vm._v("\n                        Lihat semua product\n                    ")])], 1), _vm._v(" "), _c("h1", [_vm._v("Tambah Product ")]), _vm._v(" "), _c("form", {
+    attrs: {
+      method: "post",
+      enctype: "multipart/form-data",
+      id: "form"
+    },
+    on: {
+      submit: function submit($event) {
+        $event.preventDefault();
+        return _vm.store.apply(null, arguments);
+      }
     }
   }, [_c("div", {
     staticClass: "mb-3"
@@ -2959,11 +3141,26 @@ var staticRenderFns = [function () {
       "for": "nama"
     }
   }, [_vm._v("Nama Product")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.products.nama,
+      expression: "products.nama"
+    }],
     staticClass: "form-control",
     attrs: {
       type: "text",
-      name: "nama",
-      id: "nama"
+      name: "nama"
+    },
+    domProps: {
+      value: _vm.products.nama
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+
+        _vm.$set(_vm.products, "nama", $event.target.value);
+      }
     }
   })]), _vm._v(" "), _c("div", {
     staticClass: "mb-3"
@@ -2973,11 +3170,26 @@ var staticRenderFns = [function () {
       "for": "harga"
     }
   }, [_vm._v("Harga Product")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.products.harga,
+      expression: "products.harga"
+    }],
     staticClass: "form-control",
     attrs: {
       type: "number",
-      name: "harga",
-      id: "harga"
+      name: "harga"
+    },
+    domProps: {
+      value: _vm.products.harga
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+
+        _vm.$set(_vm.products, "harga", $event.target.value);
+      }
     }
   })]), _vm._v(" "), _c("div", {
     staticClass: "mb-3"
@@ -2987,11 +3199,26 @@ var staticRenderFns = [function () {
       "for": "stok"
     }
   }, [_vm._v("Stok Product")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.products.stok,
+      expression: "products.stok"
+    }],
     staticClass: "form-control",
     attrs: {
       type: "number",
-      name: "stok",
-      id: "stok"
+      nama: "stok"
+    },
+    domProps: {
+      value: _vm.products.stok
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+
+        _vm.$set(_vm.products, "stok", $event.target.value);
+      }
     }
   })]), _vm._v(" "), _c("div", {
     staticClass: "mb-3"
@@ -3001,11 +3228,26 @@ var staticRenderFns = [function () {
       "for": "terjual"
     }
   }, [_vm._v("Terjual Product")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.products.terjual,
+      expression: "products.terjual"
+    }],
     staticClass: "form-control",
     attrs: {
       type: "number",
-      name: "terjual",
-      id: "terjual"
+      nama: "terjual"
+    },
+    domProps: {
+      value: _vm.products.terjual
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+
+        _vm.$set(_vm.products, "terjual", $event.target.value);
+      }
     }
   })]), _vm._v(" "), _c("div", {
     staticClass: "mb-3"
@@ -3015,39 +3257,116 @@ var staticRenderFns = [function () {
       "for": "deskripsi"
     }
   }, [_vm._v("Deskripsi Product")]), _vm._v(" "), _c("textarea", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.products.deskripsi,
+      expression: "products.deskripsi"
+    }],
     staticClass: "form-control",
     attrs: {
       name: "deskripsi"
+    },
+    domProps: {
+      value: _vm.products.deskripsi
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+
+        _vm.$set(_vm.products, "deskripsi", $event.target.value);
+      }
     }
   })]), _vm._v(" "), _c("div", {
     staticClass: "mb-3"
   }, [_c("label", {
     staticClass: "form-label",
     attrs: {
+      "for": "kategori"
+    }
+  }, [_vm._v("Kategori Product")]), _vm._v(" "), _c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.products.kategori,
+      expression: "products.kategori"
+    }],
+    staticClass: "form-select",
+    attrs: {
+      name: "kategori",
+      "aria-label": "Default select example"
+    },
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+
+        _vm.$set(_vm.products, "kategori", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }
+    }
+  }, [_c("option", {
+    attrs: {
+      selected: ""
+    }
+  }, [_vm._v("Pilih Kategori")]), _vm._v(" "), _vm._l(_vm.kategori, function (k) {
+    return _c("option", {
+      key: k.id,
+      domProps: {
+        value: "".concat(k.id)
+      }
+    }, [_vm._v(_vm._s(k.nama))]);
+  })], 2)]), _vm._v(" "), _c("div", {
+    staticClass: "mb-3"
+  }, [_c("label", {
+    staticClass: "form-label",
+    attrs: {
       "for": "gambar"
     }
-  }, [_vm._v("Gambar Product")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Gambar Product")]), _vm._v(" "), _vm.preview == null ? _c("div", [_c("img", {
+    style: {
+      display: "none"
+    },
+    attrs: {
+      src: _vm.preview
+    }
+  })]) : _c("div", [_c("img", {
+    staticClass: "img-thumbnail",
+    attrs: {
+      src: _vm.preview,
+      height: "300px",
+      width: "300px"
+    }
+  })]), _vm._v(" "), _c("input", {
     staticClass: "form-control",
     attrs: {
       type: "file",
       name: "gambar",
       id: "gambar"
+    },
+    on: {
+      change: _vm.filegambar
     }
   })]), _vm._v(" "), _c("button", {
     staticClass: "btn btn-primary",
     attrs: {
       type: "submit"
     }
-  }, [_vm._v("Submit")])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Submit")])])])]), _vm._v(" "), _vm._m(0)])]);
+};
+
+var staticRenderFns = [function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
     staticClass: "col-md-5"
   }, [_c("div", {
     staticClass: "form"
-  }, [_c("a", [_vm._v("Lihat semua kategori")]), _vm._v(" "), _c("h1", [_vm._v("Tambah kategori ")]), _vm._v(" "), _c("form", {
-    attrs: {
-      method: "POST",
-      enctype: "multipart/form-data"
-    }
-  }, [_c("div", {
+  }, [_c("a", [_vm._v("Lihat semua kategori")]), _vm._v(" "), _c("h1", [_vm._v("Tambah kategori ")]), _vm._v(" "), _c("div", {
     staticClass: "mb-3"
   }, [_c("label", {
     staticClass: "form-label",
@@ -3068,7 +3387,261 @@ var staticRenderFns = [function () {
     attrs: {
       type: "submit"
     }
-  }, [_vm._v("Submit")])])])])])])]);
+  }, [_vm._v("Submit")])])])]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/src/pages/editProduct.vue?vue&type=template&id=3a553f41&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/src/pages/editProduct.vue?vue&type=template&id=3a553f41& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
+    staticClass: "container product"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "form"
+  }, [_c("h1", [_vm._v("Edit Product ")]), _vm._v(" "), _c("div", {
+    staticClass: "form"
+  }, [_c("form", {
+    attrs: {
+      enctype: "multipart/form-data"
+    },
+    on: {
+      submit: function submit($event) {
+        $event.preventDefault();
+        return _vm.updateProduct.apply(null, arguments);
+      }
+    }
+  }, [_c("div", {
+    staticClass: "mb-3"
+  }, [_c("label", {
+    staticClass: "form-label",
+    attrs: {
+      "for": "nama"
+    }
+  }, [_vm._v("Nama Product")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.product.nama_product,
+      expression: "product.nama_product"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      name: "nama",
+      id: "nama"
+    },
+    domProps: {
+      value: _vm.product.nama_product
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+
+        _vm.$set(_vm.product, "nama_product", $event.target.value);
+      }
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "mb-3"
+  }, [_c("label", {
+    staticClass: "form-label",
+    attrs: {
+      "for": "harga"
+    }
+  }, [_vm._v("Harga Product")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.product.harga_product,
+      expression: "product.harga_product"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "number",
+      name: "harga",
+      id: "harga"
+    },
+    domProps: {
+      value: _vm.product.harga_product
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+
+        _vm.$set(_vm.product, "harga_product", $event.target.value);
+      }
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "mb-3"
+  }, [_c("label", {
+    staticClass: "form-label",
+    attrs: {
+      "for": "stok"
+    }
+  }, [_vm._v("Stok Product")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.product.stok_product,
+      expression: "product.stok_product"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "number",
+      name: "stok",
+      id: "stok"
+    },
+    domProps: {
+      value: _vm.product.stok_product
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+
+        _vm.$set(_vm.product, "stok_product", $event.target.value);
+      }
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "mb-3"
+  }, [_c("label", {
+    staticClass: "form-label",
+    attrs: {
+      "for": "terjual"
+    }
+  }, [_vm._v("Terjual Product")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.product.terjual,
+      expression: "product.terjual"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "number",
+      name: "terjual",
+      id: "terjual"
+    },
+    domProps: {
+      value: _vm.product.terjual
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+
+        _vm.$set(_vm.product, "terjual", $event.target.value);
+      }
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "mb-3"
+  }, [_c("label", {
+    staticClass: "form-label",
+    attrs: {
+      "for": "deskripsi"
+    }
+  }, [_vm._v("Deskripsi\n                            Product")]), _vm._v(" "), _c("textarea", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.product.deskripsi_product,
+      expression: "product.deskripsi_product"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      name: "deskripsi"
+    },
+    domProps: {
+      value: _vm.product.deskripsi_product
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+
+        _vm.$set(_vm.product, "deskripsi_product", $event.target.value);
+      }
+    }
+  }, [_vm._v(_vm._s(_vm.product.deskripsi_product))])]), _vm._v(" "), _c("div", {
+    staticClass: "mb-3"
+  }, [_c("label", {
+    staticClass: "form-label",
+    attrs: {
+      "for": "kategori"
+    }
+  }, [_vm._v("Kategori Product")]), _vm._v(" "), _c("select", {
+    staticClass: "form-select",
+    attrs: {
+      name: "kategori"
+    }
+  }, _vm._l(_vm.kategori, function (kat) {
+    return _c("option", {
+      domProps: {
+        value: kat.id,
+        selected: kat.nama == _vm.product.kategori.nama
+      }
+    }, [_vm._v("\n                                " + _vm._s(kat.nama) + "\n                            ")]);
+  }), 0)]), _vm._v(" "), _c("div", {
+    staticClass: "mb-3"
+  }, [_c("label", {
+    staticClass: "form-label",
+    attrs: {
+      "for": "gambar"
+    }
+  }, [_vm._v("Gambar Product")]), _c("br"), _vm._v(" "), _vm.preview == null ? _c("div", [_c("img", {
+    staticClass: "img-thumbnail",
+    attrs: {
+      src: "/images/" + _vm.product.gambar,
+      height: "300px",
+      width: "300px"
+    }
+  })]) : _c("div", [_c("img", {
+    staticClass: "img-thumbnail",
+    attrs: {
+      src: _vm.preview,
+      height: "300px",
+      width: "300px"
+    }
+  })]), _vm._v(" "), _c("input", {
+    staticClass: "form-control",
+    attrs: {
+      type: "file",
+      name: "gambar",
+      id: "gambar"
+    },
+    on: {
+      change: _vm.filegambar
+    }
+  })]), _vm._v(" "), _vm._m(0)])])])])]);
+};
+
+var staticRenderFns = [function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
+    staticClass: "modal-footer"
+  }, [_c("input", {
+    staticClass: "btn btn-primary",
+    attrs: {
+      type: "submit",
+      value: "Simpan"
+    }
+  })]);
 }];
 render._withStripped = true;
 
@@ -3169,6 +3742,149 @@ render._withStripped = true;
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/src/pages/product.vue?vue&type=template&id=edf67caa&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/src/pages/product.vue?vue&type=template&id=edf67caa& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
+    staticClass: "container"
+  }, [_c("div", {
+    staticClass: "bag1 row d-flex justify-content-around",
+    style: {
+      "margin-top": "60px"
+    }
+  }, [_c("h2", {
+    staticClass: "m-4"
+  }, [_vm._v("Semua Product")]), _vm._v(" "), _vm._l(_vm.product, function (pro) {
+    return _c("div", {
+      key: pro.id,
+      staticClass: "card col-lg-3 m-2 mt-4",
+      staticStyle: {
+        width: "18rem"
+      }
+    }, [_c("img", {
+      staticClass: "card-img-top",
+      attrs: {
+        src: "/images/" + pro.gambar,
+        alt: "..."
+      }
+    }), _vm._v(" "), _c("div", {
+      staticClass: "card-body"
+    }, [_c("b", [_c("p", {
+      staticClass: "card-text"
+    }, [_vm._v(_vm._s(pro.nama_product) + "(" + _vm._s(pro.nama) + ")")])]), _vm._v(" "), _c("p", {
+      staticClass: "card-text"
+    }, [_vm._v(_vm._s(pro.deskripsi_product))]), _vm._v(" "), _c("p", {
+      staticClass: "terjual"
+    }, [_vm._v("Terjual : " + _vm._s(pro.terjual))]), _vm._v(" "), _c("p", {
+      staticClass: "stok"
+    }, [_vm._v("Stok : " + _vm._s(pro.stok_product))]), _vm._v(" "), _c("b", [_c("h5", {
+      staticClass: "harga"
+    }, [_vm._v("Rp." + _vm._s(pro.harga_product))])]), _vm._v(" "), _c("div", {
+      staticClass: "row"
+    }, [_c("div", {
+      staticClass: "col"
+    }, [_c("router-link", {
+      staticClass: "btn btn-primary",
+      attrs: {
+        to: {
+          name: "editProduct",
+          params: {
+            id: pro.id
+          }
+        }
+      }
+    }, [_c("i", {
+      staticClass: "fa fa-pen",
+      attrs: {
+        "aria-hidden": "true"
+      }
+    }), _vm._v(" Edit\n                        ")])], 1), _vm._v(" "), _vm._m(0, true), _vm._v(" "), _c("div", {
+      staticClass: "modal fade",
+      attrs: {
+        id: "deleteProduct" + pro.id,
+        tabindex: "-1",
+        "aria-labelledby": "exampleModalLabel",
+        "aria-hidden": "true"
+      }
+    }, [_c("div", {
+      staticClass: "modal-dialog"
+    }, [_c("div", {
+      staticClass: "modal-content"
+    }, [_vm._m(1, true), _vm._v(" "), _c("div", {
+      staticClass: "modal-body"
+    }, [_vm._v("\n                                    Apakah anda ingin menghapus "), _c("b", [_vm._v(_vm._s(pro.nama_product))]), _vm._v("?\n                                ")]), _vm._v(" "), _c("div", {
+      staticClass: "modal-footer"
+    }, [_c("button", {
+      staticClass: "btn btn-primary",
+      attrs: {
+        type: "button",
+        "data-bs-dismiss": "modal"
+      }
+    }, [_vm._v("Tidak")]), _vm._v(" "), _c("a", {
+      attrs: {
+        href: "/delete-product/" + pro.id
+      }
+    }, [_c("button", {
+      staticClass: "btn btn-danger",
+      attrs: {
+        type: "button"
+      }
+    }, [_vm._v("Ya")])])])])])])])])]);
+  })], 2)]);
+};
+
+var staticRenderFns = [function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
+    staticClass: "col"
+  }, [_c("button", {
+    staticClass: "btn btn-danger"
+  }, [_c("i", {
+    staticClass: "fa fa-trash",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v(" Hapus\n                        ")])]);
+}, function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
+    staticClass: "modal-header"
+  }, [_c("h5", {
+    staticClass: "modal-title",
+    attrs: {
+      id: "exampleModalLabel"
+    }
+  }, [_vm._v("Hapus product")]), _vm._v(" "), _c("button", {
+    staticClass: "btn-close",
+    attrs: {
+      type: "button",
+      "data-bs-dismiss": "modal",
+      "aria-label": "Close"
+    }
+  })]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -3177,13 +3893,12 @@ render._withStripped = true;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _src_app_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./src/app.vue */ "./resources/js/src/app.vue");
-/* harmony import */ var _src_component_navbar_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./src/component/navbar.vue */ "./resources/js/src/component/navbar.vue");
-/* harmony import */ var _src_pages_home_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./src/pages/home.vue */ "./resources/js/src/pages/home.vue");
-/* harmony import */ var _router_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./router/index */ "./resources/js/router/index.js");
-/* harmony import */ var vue_meta__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-meta */ "./node_modules/vue-meta/dist/vue-meta.esm.js");
+/* harmony import */ var _router_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./router/index */ "./resources/js/router/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
@@ -3191,13 +3906,10 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 
-
-
-vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_6__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(vue_meta__WEBPACK_IMPORTED_MODULE_4__["default"]);
-var app = new vue__WEBPACK_IMPORTED_MODULE_5__["default"]({
-  el: "#app",
-  router: _router_index__WEBPACK_IMPORTED_MODULE_3__["default"],
+vue__WEBPACK_IMPORTED_MODULE_3__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_4__["default"], (axios__WEBPACK_IMPORTED_MODULE_2___default()));
+var app = new vue__WEBPACK_IMPORTED_MODULE_3__["default"]({
+  el: '#app',
+  router: _router_index__WEBPACK_IMPORTED_MODULE_1__["default"],
   components: {
     App: _src_app_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
@@ -3264,7 +3976,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
-  mode: 'history',
+  // mode: 'history',   
   routes: _routes__WEBPACK_IMPORTED_MODULE_0__["default"],
   linkExactActiveClass: "active"
 });
@@ -3285,6 +3997,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _src_pages_home_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/pages/home.vue */ "./resources/js/src/pages/home.vue");
 /* harmony import */ var _src_pages_dashboard_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../src/pages/dashboard.vue */ "./resources/js/src/pages/dashboard.vue");
+/* harmony import */ var _src_pages_product_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../src/pages/product.vue */ "./resources/js/src/pages/product.vue");
+/* harmony import */ var _src_pages_editProduct_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../src/pages/editProduct.vue */ "./resources/js/src/pages/editProduct.vue");
+
 
 
 
@@ -3296,152 +4011,16 @@ var routes = [{
   path: '/dashboard',
   component: _src_pages_dashboard_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
   name: 'Dashboard'
+}, {
+  path: '/product-show',
+  component: _src_pages_product_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+  name: 'product'
+}, {
+  path: '/product-edit/:id',
+  component: _src_pages_editProduct_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+  name: 'editProduct'
 }];
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (routes);
-
-/***/ }),
-
-/***/ "./node_modules/deepmerge/dist/cjs.js":
-/*!********************************************!*\
-  !*** ./node_modules/deepmerge/dist/cjs.js ***!
-  \********************************************/
-/***/ ((module) => {
-
-"use strict";
-
-
-var isMergeableObject = function isMergeableObject(value) {
-	return isNonNullObject(value)
-		&& !isSpecial(value)
-};
-
-function isNonNullObject(value) {
-	return !!value && typeof value === 'object'
-}
-
-function isSpecial(value) {
-	var stringValue = Object.prototype.toString.call(value);
-
-	return stringValue === '[object RegExp]'
-		|| stringValue === '[object Date]'
-		|| isReactElement(value)
-}
-
-// see https://github.com/facebook/react/blob/b5ac963fb791d1298e7f396236383bc955f916c1/src/isomorphic/classic/element/ReactElement.js#L21-L25
-var canUseSymbol = typeof Symbol === 'function' && Symbol.for;
-var REACT_ELEMENT_TYPE = canUseSymbol ? Symbol.for('react.element') : 0xeac7;
-
-function isReactElement(value) {
-	return value.$$typeof === REACT_ELEMENT_TYPE
-}
-
-function emptyTarget(val) {
-	return Array.isArray(val) ? [] : {}
-}
-
-function cloneUnlessOtherwiseSpecified(value, options) {
-	return (options.clone !== false && options.isMergeableObject(value))
-		? deepmerge(emptyTarget(value), value, options)
-		: value
-}
-
-function defaultArrayMerge(target, source, options) {
-	return target.concat(source).map(function(element) {
-		return cloneUnlessOtherwiseSpecified(element, options)
-	})
-}
-
-function getMergeFunction(key, options) {
-	if (!options.customMerge) {
-		return deepmerge
-	}
-	var customMerge = options.customMerge(key);
-	return typeof customMerge === 'function' ? customMerge : deepmerge
-}
-
-function getEnumerableOwnPropertySymbols(target) {
-	return Object.getOwnPropertySymbols
-		? Object.getOwnPropertySymbols(target).filter(function(symbol) {
-			return target.propertyIsEnumerable(symbol)
-		})
-		: []
-}
-
-function getKeys(target) {
-	return Object.keys(target).concat(getEnumerableOwnPropertySymbols(target))
-}
-
-function propertyIsOnObject(object, property) {
-	try {
-		return property in object
-	} catch(_) {
-		return false
-	}
-}
-
-// Protects from prototype poisoning and unexpected merging up the prototype chain.
-function propertyIsUnsafe(target, key) {
-	return propertyIsOnObject(target, key) // Properties are safe to merge if they don't exist in the target yet,
-		&& !(Object.hasOwnProperty.call(target, key) // unsafe if they exist up the prototype chain,
-			&& Object.propertyIsEnumerable.call(target, key)) // and also unsafe if they're nonenumerable.
-}
-
-function mergeObject(target, source, options) {
-	var destination = {};
-	if (options.isMergeableObject(target)) {
-		getKeys(target).forEach(function(key) {
-			destination[key] = cloneUnlessOtherwiseSpecified(target[key], options);
-		});
-	}
-	getKeys(source).forEach(function(key) {
-		if (propertyIsUnsafe(target, key)) {
-			return
-		}
-
-		if (propertyIsOnObject(target, key) && options.isMergeableObject(source[key])) {
-			destination[key] = getMergeFunction(key, options)(target[key], source[key], options);
-		} else {
-			destination[key] = cloneUnlessOtherwiseSpecified(source[key], options);
-		}
-	});
-	return destination
-}
-
-function deepmerge(target, source, options) {
-	options = options || {};
-	options.arrayMerge = options.arrayMerge || defaultArrayMerge;
-	options.isMergeableObject = options.isMergeableObject || isMergeableObject;
-	// cloneUnlessOtherwiseSpecified is added to `options` so that custom arrayMerge()
-	// implementations can use it. The caller may not replace it.
-	options.cloneUnlessOtherwiseSpecified = cloneUnlessOtherwiseSpecified;
-
-	var sourceIsArray = Array.isArray(source);
-	var targetIsArray = Array.isArray(target);
-	var sourceAndTargetTypesMatch = sourceIsArray === targetIsArray;
-
-	if (!sourceAndTargetTypesMatch) {
-		return cloneUnlessOtherwiseSpecified(source, options)
-	} else if (sourceIsArray) {
-		return options.arrayMerge(target, source, options)
-	} else {
-		return mergeObject(target, source, options)
-	}
-}
-
-deepmerge.all = function deepmergeAll(array, options) {
-	if (!Array.isArray(array)) {
-		throw new Error('first argument should be an array')
-	}
-
-	return array.reduce(function(prev, next) {
-		return deepmerge(prev, next, options)
-	}, {})
-};
-
-var deepmerge_1 = deepmerge;
-
-module.exports = deepmerge_1;
-
 
 /***/ }),
 
@@ -21137,6 +21716,45 @@ component.options.__file = "resources/js/src/pages/dashboard.vue"
 
 /***/ }),
 
+/***/ "./resources/js/src/pages/editProduct.vue":
+/*!************************************************!*\
+  !*** ./resources/js/src/pages/editProduct.vue ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _editProduct_vue_vue_type_template_id_3a553f41___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./editProduct.vue?vue&type=template&id=3a553f41& */ "./resources/js/src/pages/editProduct.vue?vue&type=template&id=3a553f41&");
+/* harmony import */ var _editProduct_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./editProduct.vue?vue&type=script&lang=js& */ "./resources/js/src/pages/editProduct.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _editProduct_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _editProduct_vue_vue_type_template_id_3a553f41___WEBPACK_IMPORTED_MODULE_0__.render,
+  _editProduct_vue_vue_type_template_id_3a553f41___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/src/pages/editProduct.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/src/pages/home.vue":
 /*!*****************************************!*\
   !*** ./resources/js/src/pages/home.vue ***!
@@ -21172,6 +21790,45 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 /* hot reload */
 if (false) { var api; }
 component.options.__file = "resources/js/src/pages/home.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/src/pages/product.vue":
+/*!********************************************!*\
+  !*** ./resources/js/src/pages/product.vue ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _product_vue_vue_type_template_id_edf67caa___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./product.vue?vue&type=template&id=edf67caa& */ "./resources/js/src/pages/product.vue?vue&type=template&id=edf67caa&");
+/* harmony import */ var _product_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./product.vue?vue&type=script&lang=js& */ "./resources/js/src/pages/product.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _product_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _product_vue_vue_type_template_id_edf67caa___WEBPACK_IMPORTED_MODULE_0__.render,
+  _product_vue_vue_type_template_id_edf67caa___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/src/pages/product.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -21288,6 +21945,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/src/pages/editProduct.vue?vue&type=script&lang=js&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/src/pages/editProduct.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_editProduct_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./editProduct.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/src/pages/editProduct.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_editProduct_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/src/pages/home.vue?vue&type=script&lang=js&":
 /*!******************************************************************!*\
   !*** ./resources/js/src/pages/home.vue?vue&type=script&lang=js& ***!
@@ -21301,6 +21974,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_home_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./home.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/src/pages/home.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_home_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/src/pages/product.vue?vue&type=script&lang=js&":
+/*!*********************************************************************!*\
+  !*** ./resources/js/src/pages/product.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_product_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./product.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/src/pages/product.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_product_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -21423,6 +22112,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/src/pages/editProduct.vue?vue&type=template&id=3a553f41&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/src/pages/editProduct.vue?vue&type=template&id=3a553f41& ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_editProduct_vue_vue_type_template_id_3a553f41___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_editProduct_vue_vue_type_template_id_3a553f41___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_editProduct_vue_vue_type_template_id_3a553f41___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./editProduct.vue?vue&type=template&id=3a553f41& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/src/pages/editProduct.vue?vue&type=template&id=3a553f41&");
+
+
+/***/ }),
+
 /***/ "./resources/js/src/pages/home.vue?vue&type=template&id=5ffbd0d3&":
 /*!************************************************************************!*\
   !*** ./resources/js/src/pages/home.vue?vue&type=template&id=5ffbd0d3& ***!
@@ -21436,6 +22142,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_home_vue_vue_type_template_id_5ffbd0d3___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_home_vue_vue_type_template_id_5ffbd0d3___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./home.vue?vue&type=template&id=5ffbd0d3& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/src/pages/home.vue?vue&type=template&id=5ffbd0d3&");
+
+
+/***/ }),
+
+/***/ "./resources/js/src/pages/product.vue?vue&type=template&id=edf67caa&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/src/pages/product.vue?vue&type=template&id=edf67caa& ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_product_vue_vue_type_template_id_edf67caa___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_product_vue_vue_type_template_id_edf67caa___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_product_vue_vue_type_template_id_edf67caa___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./product.vue?vue&type=template&id=edf67caa& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/src/pages/product.vue?vue&type=template&id=edf67caa&");
 
 
 /***/ }),
@@ -21547,2036 +22270,6 @@ function normalizeComponent(
     options: options
   }
 }
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-meta/dist/vue-meta.esm.js":
-/*!****************************************************!*\
-  !*** ./node_modules/vue-meta/dist/vue-meta.esm.js ***!
-  \****************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var deepmerge__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! deepmerge */ "./node_modules/deepmerge/dist/cjs.js");
-/* harmony import */ var deepmerge__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(deepmerge__WEBPACK_IMPORTED_MODULE_0__);
-/**
- * vue-meta v2.4.0
- * (c) 2020
- * - Declan de Wet
- * - Sébastien Chopin (@Atinux)
- * - Pim (@pimlie)
- * - All the amazing contributors
- * @license MIT
- */
-
-
-
-var version = "2.4.0";
-
-function _typeof(obj) {
-  "@babel/helpers - typeof";
-
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    _typeof = function (obj) {
-      return typeof obj;
-    };
-  } else {
-    _typeof = function (obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
-
-  return _typeof(obj);
-}
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object);
-
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object);
-    if (enumerableOnly) symbols = symbols.filter(function (sym) {
-      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-    });
-    keys.push.apply(keys, symbols);
-  }
-
-  return keys;
-}
-
-function _objectSpread2(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
-
-    if (i % 2) {
-      ownKeys(Object(source), true).forEach(function (key) {
-        _defineProperty(target, key, source[key]);
-      });
-    } else if (Object.getOwnPropertyDescriptors) {
-      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-    } else {
-      ownKeys(Object(source)).forEach(function (key) {
-        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-      });
-    }
-  }
-
-  return target;
-}
-
-function _toConsumableArray(arr) {
-  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
-}
-
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) return _arrayLikeToArray(arr);
-}
-
-function _iterableToArray(iter) {
-  if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
-}
-
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(o);
-  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
-
-  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
-
-  return arr2;
-}
-
-function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-
-function _createForOfIteratorHelper(o, allowArrayLike) {
-  var it;
-
-  if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {
-    if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
-      if (it) o = it;
-      var i = 0;
-
-      var F = function () {};
-
-      return {
-        s: F,
-        n: function () {
-          if (i >= o.length) return {
-            done: true
-          };
-          return {
-            done: false,
-            value: o[i++]
-          };
-        },
-        e: function (e) {
-          throw e;
-        },
-        f: F
-      };
-    }
-
-    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-  }
-
-  var normalCompletion = true,
-      didErr = false,
-      err;
-  return {
-    s: function () {
-      it = o[Symbol.iterator]();
-    },
-    n: function () {
-      var step = it.next();
-      normalCompletion = step.done;
-      return step;
-    },
-    e: function (e) {
-      didErr = true;
-      err = e;
-    },
-    f: function () {
-      try {
-        if (!normalCompletion && it.return != null) it.return();
-      } finally {
-        if (didErr) throw err;
-      }
-    }
-  };
-}
-
-/**
- * checks if passed argument is an array
- * @param  {any}  arg - the object to check
- * @return {Boolean} - true if `arg` is an array
- */
-function isArray(arg) {
-  return Array.isArray(arg);
-}
-function isUndefined(arg) {
-  return typeof arg === 'undefined';
-}
-function isObject(arg) {
-  return _typeof(arg) === 'object';
-}
-function isPureObject(arg) {
-  return _typeof(arg) === 'object' && arg !== null;
-}
-function isFunction(arg) {
-  return typeof arg === 'function';
-}
-function isString(arg) {
-  return typeof arg === 'string';
-}
-
-function hasGlobalWindowFn() {
-  try {
-    return !isUndefined(window);
-  } catch (e) {
-    return false;
-  }
-}
-var hasGlobalWindow = hasGlobalWindowFn();
-
-var _global = hasGlobalWindow ? window : __webpack_require__.g;
-
-var console = _global.console || {};
-function warn(str) {
-  /* istanbul ignore next */
-  if (!console || !console.warn) {
-    return;
-  }
-
-  console.warn(str);
-}
-var showWarningNotSupported = function showWarningNotSupported() {
-  return warn('This vue app/component has no vue-meta configuration');
-};
-
-/**
- * These are constant variables used throughout the application.
- */
-// set some sane defaults
-var defaultInfo = {
-  title: undefined,
-  titleChunk: '',
-  titleTemplate: '%s',
-  htmlAttrs: {},
-  bodyAttrs: {},
-  headAttrs: {},
-  base: [],
-  link: [],
-  meta: [],
-  style: [],
-  script: [],
-  noscript: [],
-  __dangerouslyDisableSanitizers: [],
-  __dangerouslyDisableSanitizersByTagID: {}
-};
-var rootConfigKey = '_vueMeta'; // This is the name of the component option that contains all the information that
-// gets converted to the various meta tags & attributes for the page.
-
-var keyName = 'metaInfo'; // This is the attribute vue-meta arguments on elements to know which it should
-// manage and which it should ignore.
-
-var attribute = 'data-vue-meta'; // This is the attribute that goes on the `html` tag to inform `vue-meta`
-// that the server has already generated the meta tags for the initial render.
-
-var ssrAttribute = 'data-vue-meta-server-rendered'; // This is the property that tells vue-meta to overwrite (instead of append)
-// an item in a tag list. For example, if you have two `meta` tag list items
-// that both have `vmid` of "description", then vue-meta will overwrite the
-// shallowest one with the deepest one.
-
-var tagIDKeyName = 'vmid'; // This is the key name for possible meta templates
-
-var metaTemplateKeyName = 'template'; // This is the key name for the content-holding property
-
-var contentKeyName = 'content'; // The id used for the ssr app
-
-var ssrAppId = 'ssr'; // How long meta update
-
-var debounceWait = 10; // How long meta update
-
-var waitOnDestroyed = true;
-var defaultOptions = {
-  keyName: keyName,
-  attribute: attribute,
-  ssrAttribute: ssrAttribute,
-  tagIDKeyName: tagIDKeyName,
-  contentKeyName: contentKeyName,
-  metaTemplateKeyName: metaTemplateKeyName,
-  waitOnDestroyed: waitOnDestroyed,
-  debounceWait: debounceWait,
-  ssrAppId: ssrAppId
-}; // might be a bit ugly, but minimizes the browser bundles a bit
-
-var defaultInfoKeys = Object.keys(defaultInfo); // The metaInfo property keys which are used to disable escaping
-
-var disableOptionKeys = [defaultInfoKeys[12], defaultInfoKeys[13]]; // List of metaInfo property keys which are configuration options (and dont generate html)
-
-var metaInfoOptionKeys = [defaultInfoKeys[1], defaultInfoKeys[2], 'changed'].concat(disableOptionKeys); // List of metaInfo property keys which only generates attributes and no tags
-
-var metaInfoAttributeKeys = [defaultInfoKeys[3], defaultInfoKeys[4], defaultInfoKeys[5]]; // HTML elements which support the onload event
-
-var tagsSupportingOnload = ['link', 'style', 'script']; // HTML elements which dont have a head tag (shortened to our needs)
-// see: https://www.w3.org/TR/html52/document-metadata.html
-
-var tagsWithoutEndTag = ['base', 'meta', 'link']; // HTML elements which can have inner content (shortened to our needs)
-
-var tagsWithInnerContent = ['noscript', 'script', 'style']; // Attributes which are inserted as childNodes instead of HTMLAttribute
-
-var tagAttributeAsInnerContent = ['innerHTML', 'cssText', 'json'];
-var tagProperties = ['once', 'skip', 'template']; // Attributes which should be added with data- prefix
-
-var commonDataAttributes = ['body', 'pbody']; // from: https://github.com/kangax/html-minifier/blob/gh-pages/src/htmlminifier.js#L202
-
-var booleanHtmlAttributes = ['allowfullscreen', 'amp', 'amp-boilerplate', 'async', 'autofocus', 'autoplay', 'checked', 'compact', 'controls', 'declare', 'default', 'defaultchecked', 'defaultmuted', 'defaultselected', 'defer', 'disabled', 'enabled', 'formnovalidate', 'hidden', 'indeterminate', 'inert', 'ismap', 'itemscope', 'loop', 'multiple', 'muted', 'nohref', 'noresize', 'noshade', 'novalidate', 'nowrap', 'open', 'pauseonexit', 'readonly', 'required', 'reversed', 'scoped', 'seamless', 'selected', 'sortable', 'truespeed', 'typemustmatch', 'visible'];
-
-var batchId = null;
-function triggerUpdate(_ref, rootVm, hookName) {
-  var debounceWait = _ref.debounceWait;
-
-  // if an update was triggered during initialization or when an update was triggered by the
-  // metaInfo watcher, set initialized to null
-  // then we keep falsy value but know we need to run a triggerUpdate after initialization
-  if (!rootVm[rootConfigKey].initialized && (rootVm[rootConfigKey].initializing || hookName === 'watcher')) {
-    rootVm[rootConfigKey].initialized = null;
-  }
-
-  if (rootVm[rootConfigKey].initialized && !rootVm[rootConfigKey].pausing) {
-    // batch potential DOM updates to prevent extraneous re-rendering
-    // eslint-disable-next-line no-void
-    batchUpdate(function () {
-      return void rootVm.$meta().refresh();
-    }, debounceWait);
-  }
-}
-/**
- * Performs a batched update.
- *
- * @param  {(null|Number)} id - the ID of this update
- * @param  {Function} callback - the update to perform
- * @return {Number} id - a new ID
- */
-
-function batchUpdate(callback, timeout) {
-  timeout = timeout === undefined ? 10 : timeout;
-
-  if (!timeout) {
-    callback();
-    return;
-  }
-
-  clearTimeout(batchId);
-  batchId = setTimeout(function () {
-    callback();
-  }, timeout);
-  return batchId;
-}
-
-/*
- * To reduce build size, this file provides simple polyfills without
- * overly excessive type checking and without modifying
- * the global Array.prototype
- * The polyfills are automatically removed in the commonjs build
- * Also, only files in client/ & shared/ should use these functions
- * files in server/ still use normal js function
- */
-function find(array, predicate, thisArg) {
-  if ( !Array.prototype.find) {
-    // idx needs to be a Number, for..in returns string
-    for (var idx = 0; idx < array.length; idx++) {
-      if (predicate.call(thisArg, array[idx], idx, array)) {
-        return array[idx];
-      }
-    }
-
-    return;
-  }
-
-  return array.find(predicate, thisArg);
-}
-function findIndex(array, predicate, thisArg) {
-  if ( !Array.prototype.findIndex) {
-    // idx needs to be a Number, for..in returns string
-    for (var idx = 0; idx < array.length; idx++) {
-      if (predicate.call(thisArg, array[idx], idx, array)) {
-        return idx;
-      }
-    }
-
-    return -1;
-  }
-
-  return array.findIndex(predicate, thisArg);
-}
-function toArray(arg) {
-  if ( !Array.from) {
-    return Array.prototype.slice.call(arg);
-  }
-
-  return Array.from(arg);
-}
-function includes(array, value) {
-  if ( !Array.prototype.includes) {
-    for (var idx in array) {
-      if (array[idx] === value) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  return array.includes(value);
-}
-
-var querySelector = function querySelector(arg, el) {
-  return (el || document).querySelectorAll(arg);
-};
-function getTag(tags, tag) {
-  if (!tags[tag]) {
-    tags[tag] = document.getElementsByTagName(tag)[0];
-  }
-
-  return tags[tag];
-}
-function getElementsKey(_ref) {
-  var body = _ref.body,
-      pbody = _ref.pbody;
-  return body ? 'body' : pbody ? 'pbody' : 'head';
-}
-function queryElements(parentNode, _ref2, attributes) {
-  var appId = _ref2.appId,
-      attribute = _ref2.attribute,
-      type = _ref2.type,
-      tagIDKeyName = _ref2.tagIDKeyName;
-  attributes = attributes || {};
-  var queries = ["".concat(type, "[").concat(attribute, "=\"").concat(appId, "\"]"), "".concat(type, "[data-").concat(tagIDKeyName, "]")].map(function (query) {
-    for (var key in attributes) {
-      var val = attributes[key];
-      var attributeValue = val && val !== true ? "=\"".concat(val, "\"") : '';
-      query += "[data-".concat(key).concat(attributeValue, "]");
-    }
-
-    return query;
-  });
-  return toArray(querySelector(queries.join(', '), parentNode));
-}
-function removeElementsByAppId(_ref3, appId) {
-  var attribute = _ref3.attribute;
-  toArray(querySelector("[".concat(attribute, "=\"").concat(appId, "\"]"))).map(function (el) {
-    return el.remove();
-  });
-}
-function removeAttribute(el, attributeName) {
-  el.removeAttribute(attributeName);
-}
-
-function hasMetaInfo(vm) {
-  vm = vm || this;
-  return vm && (vm[rootConfigKey] === true || isObject(vm[rootConfigKey]));
-} // a component is in a metaInfo branch when itself has meta info or one of its (grand-)children has
-
-function inMetaInfoBranch(vm) {
-  vm = vm || this;
-  return vm && !isUndefined(vm[rootConfigKey]);
-}
-
-function pause(rootVm, refresh) {
-  rootVm[rootConfigKey].pausing = true;
-  return function () {
-    return resume(rootVm, refresh);
-  };
-}
-function resume(rootVm, refresh) {
-  rootVm[rootConfigKey].pausing = false;
-
-  if (refresh || refresh === undefined) {
-    return rootVm.$meta().refresh();
-  }
-}
-
-function addNavGuards(rootVm) {
-  var router = rootVm.$router; // return when nav guards already added or no router exists
-
-  if (rootVm[rootConfigKey].navGuards || !router) {
-    /* istanbul ignore next */
-    return;
-  }
-
-  rootVm[rootConfigKey].navGuards = true;
-  router.beforeEach(function (to, from, next) {
-    pause(rootVm);
-    next();
-  });
-  router.afterEach(function () {
-    rootVm.$nextTick(function () {
-      var _resume = resume(rootVm),
-          metaInfo = _resume.metaInfo;
-
-      if (metaInfo && isFunction(metaInfo.afterNavigation)) {
-        metaInfo.afterNavigation(metaInfo);
-      }
-    });
-  });
-}
-
-var appId = 1;
-function createMixin(Vue, options) {
-  // for which Vue lifecycle hooks should the metaInfo be refreshed
-  var updateOnLifecycleHook = ['activated', 'deactivated', 'beforeMount'];
-  var wasServerRendered = false; // watch for client side component updates
-
-  return {
-    beforeCreate: function beforeCreate() {
-      var _this2 = this;
-
-      var rootKey = '$root';
-      var $root = this[rootKey];
-      var $options = this.$options;
-      var devtoolsEnabled = Vue.config.devtools;
-      Object.defineProperty(this, '_hasMetaInfo', {
-        configurable: true,
-        get: function get() {
-          // Show deprecation warning once when devtools enabled
-          if (devtoolsEnabled && !$root[rootConfigKey].deprecationWarningShown) {
-            warn('VueMeta DeprecationWarning: _hasMetaInfo has been deprecated and will be removed in a future version. Please use hasMetaInfo(vm) instead');
-            $root[rootConfigKey].deprecationWarningShown = true;
-          }
-
-          return hasMetaInfo(this);
-        }
-      });
-
-      if (this === $root) {
-        $root.$once('hook:beforeMount', function () {
-          wasServerRendered = this.$el && this.$el.nodeType === 1 && this.$el.hasAttribute('data-server-rendered'); // In most cases when you have a SSR app it will be the first app thats gonna be
-          // initiated, if we cant detect the data-server-rendered attribute from Vue but we
-          // do see our own ssrAttribute then _assume_ the Vue app with appId 1 is the ssr app
-          // attempted fix for #404 & #562, but we rly need to refactor how we pass appIds from
-          // ssr to the client
-
-          if (!wasServerRendered && $root[rootConfigKey] && $root[rootConfigKey].appId === 1) {
-            var htmlTag = getTag({}, 'html');
-            wasServerRendered = htmlTag && htmlTag.hasAttribute(options.ssrAttribute);
-          }
-        });
-      } // Add a marker to know if it uses metaInfo
-      // _vnode is used to know that it's attached to a real component
-      // useful if we use some mixin to add some meta tags (like nuxt-i18n)
-
-
-      if (isUndefined($options[options.keyName]) || $options[options.keyName] === null) {
-        return;
-      }
-
-      if (!$root[rootConfigKey]) {
-        $root[rootConfigKey] = {
-          appId: appId
-        };
-        appId++;
-
-        if (devtoolsEnabled && $root.$options[options.keyName]) {
-          // use nextTick so the children should be added to $root
-          this.$nextTick(function () {
-            // find the first child that lists fnOptions
-            var child = find($root.$children, function (c) {
-              return c.$vnode && c.$vnode.fnOptions;
-            });
-
-            if (child && child.$vnode.fnOptions[options.keyName]) {
-              warn("VueMeta has detected a possible global mixin which adds a ".concat(options.keyName, " property to all Vue components on the page. This could cause severe performance issues. If possible, use $meta().addApp to add meta information instead"));
-            }
-          });
-        }
-      } // to speed up updates we keep track of branches which have a component with vue-meta info defined
-      // if _vueMeta = true it has info, if _vueMeta = false a child has info
-
-
-      if (!this[rootConfigKey]) {
-        this[rootConfigKey] = true;
-        var parent = this.$parent;
-
-        while (parent && parent !== $root) {
-          if (isUndefined(parent[rootConfigKey])) {
-            parent[rootConfigKey] = false;
-          }
-
-          parent = parent.$parent;
-        }
-      } // coerce function-style metaInfo to a computed prop so we can observe
-      // it on creation
-
-
-      if (isFunction($options[options.keyName])) {
-        $options.computed = $options.computed || {};
-        $options.computed.$metaInfo = $options[options.keyName];
-
-        if (!this.$isServer) {
-          // if computed $metaInfo exists, watch it for updates & trigger a refresh
-          // when it changes (i.e. automatically handle async actions that affect metaInfo)
-          // credit for this suggestion goes to [Sébastien Chopin](https://github.com/Atinux)
-          this.$on('hook:created', function () {
-            this.$watch('$metaInfo', function () {
-              triggerUpdate(options, this[rootKey], 'watcher');
-            });
-          });
-        }
-      } // force an initial refresh on page load and prevent other lifecycleHooks
-      // to triggerUpdate until this initial refresh is finished
-      // this is to make sure that when a page is opened in an inactive tab which
-      // has throttled rAF/timers we still immediately set the page title
-
-
-      if (isUndefined($root[rootConfigKey].initialized)) {
-        $root[rootConfigKey].initialized = this.$isServer;
-
-        if (!$root[rootConfigKey].initialized) {
-          if (!$root[rootConfigKey].initializedSsr) {
-            $root[rootConfigKey].initializedSsr = true;
-            this.$on('hook:beforeMount', function () {
-              var $root = this[rootKey]; // if this Vue-app was server rendered, set the appId to 'ssr'
-              // only one SSR app per page is supported
-
-              if (wasServerRendered) {
-                $root[rootConfigKey].appId = options.ssrAppId;
-              }
-            });
-          } // we use the mounted hook here as on page load
-
-
-          this.$on('hook:mounted', function () {
-            var $root = this[rootKey];
-
-            if ($root[rootConfigKey].initialized) {
-              return;
-            } // used in triggerUpdate to check if a change was triggered
-            // during initialization
-
-
-            $root[rootConfigKey].initializing = true; // refresh meta in nextTick so all child components have loaded
-
-            this.$nextTick(function () {
-              var _$root$$meta$refresh = $root.$meta().refresh(),
-                  tags = _$root$$meta$refresh.tags,
-                  metaInfo = _$root$$meta$refresh.metaInfo; // After ssr hydration (identifier by tags === false) check
-              // if initialized was set to null in triggerUpdate. That'd mean
-              // that during initilazation changes where triggered which need
-              // to be applied OR a metaInfo watcher was triggered before the
-              // current hook was called
-              // (during initialization all changes are blocked)
-
-
-              if (tags === false && $root[rootConfigKey].initialized === null) {
-                this.$nextTick(function () {
-                  return triggerUpdate(options, $root, 'init');
-                });
-              }
-
-              $root[rootConfigKey].initialized = true;
-              delete $root[rootConfigKey].initializing; // add the navigation guards if they havent been added yet
-              // they are needed for the afterNavigation callback
-
-              if (!options.refreshOnceOnNavigation && metaInfo.afterNavigation) {
-                addNavGuards($root);
-              }
-            });
-          }); // add the navigation guards if requested
-
-          if (options.refreshOnceOnNavigation) {
-            addNavGuards($root);
-          }
-        }
-      }
-
-      this.$on('hook:destroyed', function () {
-        var _this = this;
-
-        // do not trigger refresh:
-        // - when user configured to not wait for transitions on destroyed
-        // - when the component doesnt have a parent
-        // - doesnt have metaInfo defined
-        if (!this.$parent || !hasMetaInfo(this)) {
-          return;
-        }
-
-        delete this._hasMetaInfo;
-        this.$nextTick(function () {
-          if (!options.waitOnDestroyed || !_this.$el || !_this.$el.offsetParent) {
-            triggerUpdate(options, _this.$root, 'destroyed');
-            return;
-          } // Wait that element is hidden before refreshing meta tags (to support animations)
-
-
-          var interval = setInterval(function () {
-            if (_this.$el && _this.$el.offsetParent !== null) {
-              /* istanbul ignore next line */
-              return;
-            }
-
-            clearInterval(interval);
-            triggerUpdate(options, _this.$root, 'destroyed');
-          }, 50);
-        });
-      }); // do not trigger refresh on the server side
-
-      if (this.$isServer) {
-        /* istanbul ignore next */
-        return;
-      } // no need to add this hooks on server side
-
-
-      updateOnLifecycleHook.forEach(function (lifecycleHook) {
-        _this2.$on("hook:".concat(lifecycleHook), function () {
-          triggerUpdate(options, this[rootKey], lifecycleHook);
-        });
-      });
-    }
-  };
-}
-
-function setOptions(options) {
-  // combine options
-  options = isObject(options) ? options : {}; // The options are set like this so they can
-  // be minified by terser while keeping the
-  // user api intact
-  // terser --mangle-properties keep_quoted=strict
-
-  /* eslint-disable dot-notation */
-
-  return {
-    keyName: options['keyName'] || defaultOptions.keyName,
-    attribute: options['attribute'] || defaultOptions.attribute,
-    ssrAttribute: options['ssrAttribute'] || defaultOptions.ssrAttribute,
-    tagIDKeyName: options['tagIDKeyName'] || defaultOptions.tagIDKeyName,
-    contentKeyName: options['contentKeyName'] || defaultOptions.contentKeyName,
-    metaTemplateKeyName: options['metaTemplateKeyName'] || defaultOptions.metaTemplateKeyName,
-    debounceWait: isUndefined(options['debounceWait']) ? defaultOptions.debounceWait : options['debounceWait'],
-    waitOnDestroyed: isUndefined(options['waitOnDestroyed']) ? defaultOptions.waitOnDestroyed : options['waitOnDestroyed'],
-    ssrAppId: options['ssrAppId'] || defaultOptions.ssrAppId,
-    refreshOnceOnNavigation: !!options['refreshOnceOnNavigation']
-  };
-  /* eslint-enable dot-notation */
-}
-function getOptions(options) {
-  var optionsCopy = {};
-
-  for (var key in options) {
-    optionsCopy[key] = options[key];
-  }
-
-  return optionsCopy;
-}
-
-function ensureIsArray(arg, key) {
-  if (!key || !isObject(arg)) {
-    return isArray(arg) ? arg : [];
-  }
-
-  if (!isArray(arg[key])) {
-    arg[key] = [];
-  }
-
-  return arg;
-}
-
-var serverSequences = [[/&/g, '&amp;'], [/</g, '&lt;'], [/>/g, '&gt;'], [/"/g, '&quot;'], [/'/g, '&#x27;']];
-var clientSequences = [[/&/g, "&"], [/</g, "<"], [/>/g, ">"], [/"/g, "\""], [/'/g, "'"]]; // sanitizes potentially dangerous characters
-
-function escape(info, options, escapeOptions, escapeKeys) {
-  var tagIDKeyName = options.tagIDKeyName;
-  var _escapeOptions$doEsca = escapeOptions.doEscape,
-      doEscape = _escapeOptions$doEsca === void 0 ? function (v) {
-    return v;
-  } : _escapeOptions$doEsca;
-  var escaped = {};
-
-  for (var key in info) {
-    var value = info[key]; // no need to escape configuration options
-
-    if (includes(metaInfoOptionKeys, key)) {
-      escaped[key] = value;
-      continue;
-    } // do not use destructuring for disableOptionKeys, it increases transpiled size
-    // due to var checks while we are guaranteed the structure of the cb
-
-
-    var disableKey = disableOptionKeys[0];
-
-    if (escapeOptions[disableKey] && includes(escapeOptions[disableKey], key)) {
-      // this info[key] doesnt need to escaped if the option is listed in __dangerouslyDisableSanitizers
-      escaped[key] = value;
-      continue;
-    }
-
-    var tagId = info[tagIDKeyName];
-
-    if (tagId) {
-      disableKey = disableOptionKeys[1]; // keys which are listed in __dangerouslyDisableSanitizersByTagID for the current vmid do not need to be escaped
-
-      if (escapeOptions[disableKey] && escapeOptions[disableKey][tagId] && includes(escapeOptions[disableKey][tagId], key)) {
-        escaped[key] = value;
-        continue;
-      }
-    }
-
-    if (isString(value)) {
-      escaped[key] = doEscape(value);
-    } else if (isArray(value)) {
-      escaped[key] = value.map(function (v) {
-        if (isPureObject(v)) {
-          return escape(v, options, escapeOptions, true);
-        }
-
-        return doEscape(v);
-      });
-    } else if (isPureObject(value)) {
-      escaped[key] = escape(value, options, escapeOptions, true);
-    } else {
-      escaped[key] = value;
-    }
-
-    if (escapeKeys) {
-      var escapedKey = doEscape(key);
-
-      if (key !== escapedKey) {
-        escaped[escapedKey] = escaped[key];
-        delete escaped[key];
-      }
-    }
-  }
-
-  return escaped;
-}
-function escapeMetaInfo(options, info, escapeSequences) {
-  escapeSequences = escapeSequences || []; // do not use destructuring for seq, it increases transpiled size
-  // due to var checks while we are guaranteed the structure of the cb
-
-  var escapeOptions = {
-    doEscape: function doEscape(value) {
-      return escapeSequences.reduce(function (val, seq) {
-        return val.replace(seq[0], seq[1]);
-      }, value);
-    }
-  };
-  disableOptionKeys.forEach(function (disableKey, index) {
-    if (index === 0) {
-      ensureIsArray(info, disableKey);
-    } else if (index === 1) {
-      for (var key in info[disableKey]) {
-        ensureIsArray(info[disableKey], key);
-      }
-    }
-
-    escapeOptions[disableKey] = info[disableKey];
-  }); // begin sanitization
-
-  return escape(info, options, escapeOptions);
-}
-
-function applyTemplate(_ref, headObject, template, chunk) {
-  var component = _ref.component,
-      metaTemplateKeyName = _ref.metaTemplateKeyName,
-      contentKeyName = _ref.contentKeyName;
-
-  if (template === true || headObject[metaTemplateKeyName] === true) {
-    // abort, template was already applied
-    return false;
-  }
-
-  if (isUndefined(template) && headObject[metaTemplateKeyName]) {
-    template = headObject[metaTemplateKeyName];
-    headObject[metaTemplateKeyName] = true;
-  } // return early if no template defined
-
-
-  if (!template) {
-    // cleanup faulty template properties
-    delete headObject[metaTemplateKeyName];
-    return false;
-  }
-
-  if (isUndefined(chunk)) {
-    chunk = headObject[contentKeyName];
-  }
-
-  headObject[contentKeyName] = isFunction(template) ? template.call(component, chunk) : template.replace(/%s/g, chunk);
-  return true;
-}
-
-function _arrayMerge(_ref, target, source) {
-  var component = _ref.component,
-      tagIDKeyName = _ref.tagIDKeyName,
-      metaTemplateKeyName = _ref.metaTemplateKeyName,
-      contentKeyName = _ref.contentKeyName;
-  // we concat the arrays without merging objects contained in,
-  // but we check for a `vmid` property on each object in the array
-  // using an O(1) lookup associative array exploit
-  var destination = [];
-
-  if (!target.length && !source.length) {
-    return destination;
-  }
-
-  target.forEach(function (targetItem, targetIndex) {
-    // no tagID so no need to check for duplicity
-    if (!targetItem[tagIDKeyName]) {
-      destination.push(targetItem);
-      return;
-    }
-
-    var sourceIndex = findIndex(source, function (item) {
-      return item[tagIDKeyName] === targetItem[tagIDKeyName];
-    });
-    var sourceItem = source[sourceIndex]; // source doesnt contain any duplicate vmid's, we can keep targetItem
-
-    if (sourceIndex === -1) {
-      destination.push(targetItem);
-      return;
-    } // when sourceItem explictly defines contentKeyName or innerHTML as undefined, its
-    // an indication that we need to skip the default behaviour or child has preference over parent
-    // which means we keep the targetItem and ignore/remove the sourceItem
-
-
-    if (contentKeyName in sourceItem && sourceItem[contentKeyName] === undefined || 'innerHTML' in sourceItem && sourceItem.innerHTML === undefined) {
-      destination.push(targetItem); // remove current index from source array so its not concatenated to destination below
-
-      source.splice(sourceIndex, 1);
-      return;
-    } // we now know that targetItem is a duplicate and we should ignore it in favor of sourceItem
-    // if source specifies null as content then ignore both the target as the source
-
-
-    if (sourceItem[contentKeyName] === null || sourceItem.innerHTML === null) {
-      // remove current index from source array so its not concatenated to destination below
-      source.splice(sourceIndex, 1);
-      return;
-    } // now we only need to check if the target has a template to combine it with the source
-
-
-    var targetTemplate = targetItem[metaTemplateKeyName];
-
-    if (!targetTemplate) {
-      return;
-    }
-
-    var sourceTemplate = sourceItem[metaTemplateKeyName];
-
-    if (!sourceTemplate) {
-      // use parent template and child content
-      applyTemplate({
-        component: component,
-        metaTemplateKeyName: metaTemplateKeyName,
-        contentKeyName: contentKeyName
-      }, sourceItem, targetTemplate); // set template to true to indicate template was already applied
-
-      sourceItem.template = true;
-      return;
-    }
-
-    if (!sourceItem[contentKeyName]) {
-      // use parent content and child template
-      applyTemplate({
-        component: component,
-        metaTemplateKeyName: metaTemplateKeyName,
-        contentKeyName: contentKeyName
-      }, sourceItem, undefined, targetItem[contentKeyName]);
-    }
-  });
-  return destination.concat(source);
-}
-var warningShown = false;
-function merge(target, source, options) {
-  options = options || {}; // remove properties explicitly set to false so child components can
-  // optionally _not_ overwrite the parents content
-  // (for array properties this is checked in arrayMerge)
-
-  if (source.title === undefined) {
-    delete source.title;
-  }
-
-  metaInfoAttributeKeys.forEach(function (attrKey) {
-    if (!source[attrKey]) {
-      return;
-    }
-
-    for (var key in source[attrKey]) {
-      if (key in source[attrKey] && source[attrKey][key] === undefined) {
-        if (includes(booleanHtmlAttributes, key) && !warningShown) {
-          warn('VueMeta: Please note that since v2 the value undefined is not used to indicate boolean attributes anymore, see migration guide for details');
-          warningShown = true;
-        }
-
-        delete source[attrKey][key];
-      }
-    }
-  });
-  return deepmerge__WEBPACK_IMPORTED_MODULE_0___default()(target, source, {
-    arrayMerge: function arrayMerge(t, s) {
-      return _arrayMerge(options, t, s);
-    }
-  });
-}
-
-function getComponentMetaInfo(options, component) {
-  return getComponentOption(options || {}, component, defaultInfo);
-}
-/**
- * Returns the `opts.option` $option value of the given `opts.component`.
- * If methods are encountered, they will be bound to the component context.
- * If `opts.deep` is true, will recursively merge all child component
- * `opts.option` $option values into the returned result.
- *
- * @param  {Object} opts - options
- * @param  {Object} opts.component - Vue component to fetch option data from
- * @param  {Boolean} opts.deep - look for data in child components as well?
- * @param  {Function} opts.arrayMerge - how should arrays be merged?
- * @param  {String} opts.keyName - the name of the option to look for
- * @param  {Object} [result={}] - result so far
- * @return {Object} result - final aggregated result
- */
-
-function getComponentOption(options, component, result) {
-  result = result || {};
-
-  if (component._inactive) {
-    return result;
-  }
-
-  options = options || {};
-  var _options = options,
-      keyName = _options.keyName;
-  var $metaInfo = component.$metaInfo,
-      $options = component.$options,
-      $children = component.$children; // only collect option data if it exists
-
-  if ($options[keyName]) {
-    // if $metaInfo exists then [keyName] was defined as a function
-    // and set to the computed prop $metaInfo in the mixin
-    // using the computed prop should be a small performance increase
-    // because Vue caches those internally
-    var data = $metaInfo || $options[keyName]; // only merge data with result when its an object
-    // eg it could be a function when metaInfo() returns undefined
-    // dueo to the or statement above
-
-    if (isObject(data)) {
-      result = merge(result, data, options);
-    }
-  } // collect & aggregate child options if deep = true
-
-
-  if ($children.length) {
-    $children.forEach(function (childComponent) {
-      // check if the childComponent is in a branch
-      // return otherwise so we dont walk all component branches unnecessarily
-      if (!inMetaInfoBranch(childComponent)) {
-        return;
-      }
-
-      result = getComponentOption(options, childComponent, result);
-    });
-  }
-
-  return result;
-}
-
-var callbacks = [];
-function isDOMComplete(d) {
-  return (d || document).readyState === 'complete';
-}
-function addCallback(query, callback) {
-  if (arguments.length === 1) {
-    callback = query;
-    query = '';
-  }
-
-  callbacks.push([query, callback]);
-}
-function addCallbacks(_ref, type, tags, autoAddListeners) {
-  var tagIDKeyName = _ref.tagIDKeyName;
-  var hasAsyncCallback = false;
-  tags.forEach(function (tag) {
-    if (!tag[tagIDKeyName] || !tag.callback) {
-      return;
-    }
-
-    hasAsyncCallback = true;
-    addCallback("".concat(type, "[data-").concat(tagIDKeyName, "=\"").concat(tag[tagIDKeyName], "\"]"), tag.callback);
-  });
-
-  if (!autoAddListeners || !hasAsyncCallback) {
-    return hasAsyncCallback;
-  }
-
-  return addListeners();
-}
-function addListeners() {
-  if (isDOMComplete()) {
-    applyCallbacks();
-    return;
-  } // Instead of using a MutationObserver, we just apply
-
-  /* istanbul ignore next */
-
-
-  document.onreadystatechange = function () {
-    applyCallbacks();
-  };
-}
-function applyCallbacks(matchElement) {
-  callbacks.forEach(function (args) {
-    // do not use destructuring for args, it increases transpiled size
-    // due to var checks while we are guaranteed the structure of the cb
-    var query = args[0];
-    var callback = args[1];
-    var selector = "".concat(query, "[onload=\"this.__vm_l=1\"]");
-    var elements = [];
-
-    if (!matchElement) {
-      elements = toArray(querySelector(selector));
-    }
-
-    if (matchElement && matchElement.matches(selector)) {
-      elements = [matchElement];
-    }
-
-    elements.forEach(function (element) {
-      /* __vm_cb: whether the load callback has been called
-       * __vm_l: set by onload attribute, whether the element was loaded
-       * __vm_ev: whether the event listener was added or not
-       */
-      if (element.__vm_cb) {
-        return;
-      }
-
-      var onload = function onload() {
-        /* Mark that the callback for this element has already been called,
-         * this prevents the callback to run twice in some (rare) conditions
-         */
-        element.__vm_cb = true;
-        /* onload needs to be removed because we only need the
-         * attribute after ssr and if we dont remove it the node
-         * will fail isEqualNode on the client
-         */
-
-        removeAttribute(element, 'onload');
-        callback(element);
-      };
-      /* IE9 doesnt seem to load scripts synchronously,
-       * causing a script sometimes/often already to be loaded
-       * when we add the event listener below (thus adding an onload event
-       * listener has no use because it will never be triggered).
-       * Therefore we add the onload attribute during ssr, and
-       * check here if it was already loaded or not
-       */
-
-
-      if (element.__vm_l) {
-        onload();
-        return;
-      }
-
-      if (!element.__vm_ev) {
-        element.__vm_ev = true;
-        element.addEventListener('load', onload);
-      }
-    });
-  });
-}
-
-// instead of adding it to the html
-
-var attributeMap = {};
-/**
- * Updates the document's html tag attributes
- *
- * @param  {Object} attrs - the new document html attributes
- * @param  {HTMLElement} tag - the HTMLElement tag to update with new attrs
- */
-
-function updateAttribute(appId, options, type, attrs, tag) {
-  var _ref = options || {},
-      attribute = _ref.attribute;
-
-  var vueMetaAttrString = tag.getAttribute(attribute);
-
-  if (vueMetaAttrString) {
-    attributeMap[type] = JSON.parse(decodeURI(vueMetaAttrString));
-    removeAttribute(tag, attribute);
-  }
-
-  var data = attributeMap[type] || {};
-  var toUpdate = []; // remove attributes from the map
-  // which have been removed for this appId
-
-  for (var attr in data) {
-    if (data[attr] !== undefined && appId in data[attr]) {
-      toUpdate.push(attr);
-
-      if (!attrs[attr]) {
-        delete data[attr][appId];
-      }
-    }
-  }
-
-  for (var _attr in attrs) {
-    var attrData = data[_attr];
-
-    if (!attrData || attrData[appId] !== attrs[_attr]) {
-      toUpdate.push(_attr);
-
-      if (attrs[_attr] !== undefined) {
-        data[_attr] = data[_attr] || {};
-        data[_attr][appId] = attrs[_attr];
-      }
-    }
-  }
-
-  for (var _i = 0, _toUpdate = toUpdate; _i < _toUpdate.length; _i++) {
-    var _attr2 = _toUpdate[_i];
-    var _attrData = data[_attr2];
-    var attrValues = [];
-
-    for (var _appId in _attrData) {
-      Array.prototype.push.apply(attrValues, [].concat(_attrData[_appId]));
-    }
-
-    if (attrValues.length) {
-      var attrValue = includes(booleanHtmlAttributes, _attr2) && attrValues.some(Boolean) ? '' : attrValues.filter(function (v) {
-        return v !== undefined;
-      }).join(' ');
-      tag.setAttribute(_attr2, attrValue);
-    } else {
-      removeAttribute(tag, _attr2);
-    }
-  }
-
-  attributeMap[type] = data;
-}
-
-/**
- * Updates the document title
- *
- * @param  {String} title - the new title of the document
- */
-function updateTitle(title) {
-  if (!title && title !== '') {
-    return;
-  }
-
-  document.title = title;
-}
-
-/**
- * Updates meta tags inside <head> and <body> on the client. Borrowed from `react-helmet`:
- * https://github.com/nfl/react-helmet/blob/004d448f8de5f823d10f838b02317521180f34da/src/Helmet.js#L195-L245
- *
- * @param  {('meta'|'base'|'link'|'style'|'script'|'noscript')} type - the name of the tag
- * @param  {(Array<Object>|Object)} tags - an array of tag objects or a single object in case of base
- * @return {Object} - a representation of what tags changed
- */
-
-function updateTag(appId, options, type, tags, head, body) {
-  var _ref = options || {},
-      attribute = _ref.attribute,
-      tagIDKeyName = _ref.tagIDKeyName;
-
-  var dataAttributes = commonDataAttributes.slice();
-  dataAttributes.push(tagIDKeyName);
-  var newElements = [];
-  var queryOptions = {
-    appId: appId,
-    attribute: attribute,
-    type: type,
-    tagIDKeyName: tagIDKeyName
-  };
-  var currentElements = {
-    head: queryElements(head, queryOptions),
-    pbody: queryElements(body, queryOptions, {
-      pbody: true
-    }),
-    body: queryElements(body, queryOptions, {
-      body: true
-    })
-  };
-
-  if (tags.length > 1) {
-    // remove duplicates that could have been found by merging tags
-    // which include a mixin with metaInfo and that mixin is used
-    // by multiple components on the same page
-    var found = [];
-    tags = tags.filter(function (x) {
-      var k = JSON.stringify(x);
-      var res = !includes(found, k);
-      found.push(k);
-      return res;
-    });
-  }
-
-  tags.forEach(function (tag) {
-    if (tag.skip) {
-      return;
-    }
-
-    var newElement = document.createElement(type);
-
-    if (!tag.once) {
-      newElement.setAttribute(attribute, appId);
-    }
-
-    Object.keys(tag).forEach(function (attr) {
-      /* istanbul ignore next */
-      if (includes(tagProperties, attr)) {
-        return;
-      }
-
-      if (attr === 'innerHTML') {
-        newElement.innerHTML = tag.innerHTML;
-        return;
-      }
-
-      if (attr === 'json') {
-        newElement.innerHTML = JSON.stringify(tag.json);
-        return;
-      }
-
-      if (attr === 'cssText') {
-        if (newElement.styleSheet) {
-          /* istanbul ignore next */
-          newElement.styleSheet.cssText = tag.cssText;
-        } else {
-          newElement.appendChild(document.createTextNode(tag.cssText));
-        }
-
-        return;
-      }
-
-      if (attr === 'callback') {
-        newElement.onload = function () {
-          return tag[attr](newElement);
-        };
-
-        return;
-      }
-
-      var _attr = includes(dataAttributes, attr) ? "data-".concat(attr) : attr;
-
-      var isBooleanAttribute = includes(booleanHtmlAttributes, attr);
-
-      if (isBooleanAttribute && !tag[attr]) {
-        return;
-      }
-
-      var value = isBooleanAttribute ? '' : tag[attr];
-      newElement.setAttribute(_attr, value);
-    });
-    var oldElements = currentElements[getElementsKey(tag)]; // Remove a duplicate tag from domTagstoRemove, so it isn't cleared.
-
-    var indexToDelete;
-    var hasEqualElement = oldElements.some(function (existingTag, index) {
-      indexToDelete = index;
-      return newElement.isEqualNode(existingTag);
-    });
-
-    if (hasEqualElement && (indexToDelete || indexToDelete === 0)) {
-      oldElements.splice(indexToDelete, 1);
-    } else {
-      newElements.push(newElement);
-    }
-  });
-  var oldElements = [];
-
-  for (var _type in currentElements) {
-    Array.prototype.push.apply(oldElements, currentElements[_type]);
-  } // remove old elements
-
-
-  oldElements.forEach(function (element) {
-    element.parentNode.removeChild(element);
-  }); // insert new elements
-
-  newElements.forEach(function (element) {
-    if (element.hasAttribute('data-body')) {
-      body.appendChild(element);
-      return;
-    }
-
-    if (element.hasAttribute('data-pbody')) {
-      body.insertBefore(element, body.firstChild);
-      return;
-    }
-
-    head.appendChild(element);
-  });
-  return {
-    oldTags: oldElements,
-    newTags: newElements
-  };
-}
-
-/**
- * Performs client-side updates when new meta info is received
- *
- * @param  {Object} newInfo - the meta info to update to
- */
-
-function updateClientMetaInfo(appId, options, newInfo) {
-  options = options || {};
-  var _options = options,
-      ssrAttribute = _options.ssrAttribute,
-      ssrAppId = _options.ssrAppId; // only cache tags for current update
-
-  var tags = {};
-  var htmlTag = getTag(tags, 'html'); // if this is a server render, then dont update
-
-  if (appId === ssrAppId && htmlTag.hasAttribute(ssrAttribute)) {
-    // remove the server render attribute so we can update on (next) changes
-    removeAttribute(htmlTag, ssrAttribute); // add load callbacks if the
-
-    var addLoadListeners = false;
-    tagsSupportingOnload.forEach(function (type) {
-      if (newInfo[type] && addCallbacks(options, type, newInfo[type])) {
-        addLoadListeners = true;
-      }
-    });
-
-    if (addLoadListeners) {
-      addListeners();
-    }
-
-    return false;
-  } // initialize tracked changes
-
-
-  var tagsAdded = {};
-  var tagsRemoved = {};
-
-  for (var type in newInfo) {
-    // ignore these
-    if (includes(metaInfoOptionKeys, type)) {
-      continue;
-    }
-
-    if (type === 'title') {
-      // update the title
-      updateTitle(newInfo.title);
-      continue;
-    }
-
-    if (includes(metaInfoAttributeKeys, type)) {
-      var tagName = type.substr(0, 4);
-      updateAttribute(appId, options, type, newInfo[type], getTag(tags, tagName));
-      continue;
-    } // tags should always be an array, ignore if it isnt
-
-
-    if (!isArray(newInfo[type])) {
-      continue;
-    }
-
-    var _updateTag = updateTag(appId, options, type, newInfo[type], getTag(tags, 'head'), getTag(tags, 'body')),
-        oldTags = _updateTag.oldTags,
-        newTags = _updateTag.newTags;
-
-    if (newTags.length) {
-      tagsAdded[type] = newTags;
-      tagsRemoved[type] = oldTags;
-    }
-  }
-
-  return {
-    tagsAdded: tagsAdded,
-    tagsRemoved: tagsRemoved
-  };
-}
-
-var appsMetaInfo;
-function addApp(rootVm, appId, options) {
-  return {
-    set: function set(metaInfo) {
-      return setMetaInfo(rootVm, appId, options, metaInfo);
-    },
-    remove: function remove() {
-      return removeMetaInfo(rootVm, appId, options);
-    }
-  };
-}
-function setMetaInfo(rootVm, appId, options, metaInfo) {
-  // if a vm exists _and_ its mounted then immediately update
-  if (rootVm && rootVm.$el) {
-    return updateClientMetaInfo(appId, options, metaInfo);
-  } // store for later, the info
-  // will be set on the first refresh
-
-
-  appsMetaInfo = appsMetaInfo || {};
-  appsMetaInfo[appId] = metaInfo;
-}
-function removeMetaInfo(rootVm, appId, options) {
-  if (rootVm && rootVm.$el) {
-    var tags = {};
-
-    var _iterator = _createForOfIteratorHelper(metaInfoAttributeKeys),
-        _step;
-
-    try {
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var type = _step.value;
-        var tagName = type.substr(0, 4);
-        updateAttribute(appId, options, type, {}, getTag(tags, tagName));
-      }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
-    }
-
-    return removeElementsByAppId(options, appId);
-  }
-
-  if (appsMetaInfo[appId]) {
-    delete appsMetaInfo[appId];
-    clearAppsMetaInfo();
-  }
-}
-function getAppsMetaInfo() {
-  return appsMetaInfo;
-}
-function clearAppsMetaInfo(force) {
-  if (force || !Object.keys(appsMetaInfo).length) {
-    appsMetaInfo = undefined;
-  }
-}
-
-/**
- * Returns the correct meta info for the given component
- * (child components will overwrite parent meta info)
- *
- * @param  {Object} component - the Vue instance to get meta info from
- * @return {Object} - returned meta info
- */
-
-function getMetaInfo(options, info, escapeSequences, component) {
-  options = options || {};
-  escapeSequences = escapeSequences || [];
-  var _options = options,
-      tagIDKeyName = _options.tagIDKeyName; // Remove all "template" tags from meta
-  // backup the title chunk in case user wants access to it
-
-  if (info.title) {
-    info.titleChunk = info.title;
-  } // replace title with populated template
-
-
-  if (info.titleTemplate && info.titleTemplate !== '%s') {
-    applyTemplate({
-      component: component,
-      contentKeyName: 'title'
-    }, info, info.titleTemplate, info.titleChunk || '');
-  } // convert base tag to an array so it can be handled the same way
-  // as the other tags
-
-
-  if (info.base) {
-    info.base = Object.keys(info.base).length ? [info.base] : [];
-  }
-
-  if (info.meta) {
-    // remove meta items with duplicate vmid's
-    info.meta = info.meta.filter(function (metaItem, index, arr) {
-      var hasVmid = !!metaItem[tagIDKeyName];
-
-      if (!hasVmid) {
-        return true;
-      }
-
-      var isFirstItemForVmid = index === findIndex(arr, function (item) {
-        return item[tagIDKeyName] === metaItem[tagIDKeyName];
-      });
-      return isFirstItemForVmid;
-    }); // apply templates if needed
-
-    info.meta.forEach(function (metaObject) {
-      return applyTemplate(options, metaObject);
-    });
-  }
-
-  return escapeMetaInfo(options, info, escapeSequences);
-}
-
-/**
- * When called, will update the current meta info with new meta info.
- * Useful when updating meta info as the result of an asynchronous
- * action that resolves after the initial render takes place.
- *
- * Credit to [Sébastien Chopin](https://github.com/Atinux) for the suggestion
- * to implement this method.
- *
- * @return {Object} - new meta info
- */
-
-function refresh(rootVm, options) {
-  options = options || {}; // make sure vue-meta was initiated
-
-  if (!rootVm[rootConfigKey]) {
-    showWarningNotSupported();
-    return {};
-  } // collect & aggregate all metaInfo $options
-
-
-  var rawInfo = getComponentMetaInfo(options, rootVm);
-  var metaInfo = getMetaInfo(options, rawInfo, clientSequences, rootVm);
-  var appId = rootVm[rootConfigKey].appId;
-  var tags = updateClientMetaInfo(appId, options, metaInfo); // emit "event" with new info
-
-  if (tags && isFunction(metaInfo.changed)) {
-    metaInfo.changed(metaInfo, tags.tagsAdded, tags.tagsRemoved);
-    tags = {
-      addedTags: tags.tagsAdded,
-      removedTags: tags.tagsRemoved
-    };
-  }
-
-  var appsMetaInfo = getAppsMetaInfo();
-
-  if (appsMetaInfo) {
-    for (var additionalAppId in appsMetaInfo) {
-      updateClientMetaInfo(additionalAppId, options, appsMetaInfo[additionalAppId]);
-      delete appsMetaInfo[additionalAppId];
-    }
-
-    clearAppsMetaInfo(true);
-  }
-
-  return {
-    vm: rootVm,
-    metaInfo: metaInfo,
-    // eslint-disable-line object-shorthand
-    tags: tags
-  };
-}
-
-/**
- * Generates tag attributes for use on the server.
- *
- * @param  {('bodyAttrs'|'htmlAttrs'|'headAttrs')} type - the type of attributes to generate
- * @param  {Object} data - the attributes to generate
- * @return {Object} - the attribute generator
- */
-
-function attributeGenerator(options, type, data, _ref) {
-  var addSsrAttribute = _ref.addSsrAttribute;
-
-  var _ref2 = options || {},
-      attribute = _ref2.attribute,
-      ssrAttribute = _ref2.ssrAttribute;
-
-  var attributeStr = '';
-
-  for (var attr in data) {
-    var attrData = data[attr];
-    var attrValues = [];
-
-    for (var appId in attrData) {
-      attrValues.push.apply(attrValues, _toConsumableArray([].concat(attrData[appId])));
-    }
-
-    if (attrValues.length) {
-      attributeStr += booleanHtmlAttributes.includes(attr) && attrValues.some(Boolean) ? "".concat(attr) : "".concat(attr, "=\"").concat(attrValues.join(' '), "\"");
-      attributeStr += ' ';
-    }
-  }
-
-  if (attributeStr) {
-    attributeStr += "".concat(attribute, "=\"").concat(encodeURI(JSON.stringify(data)), "\"");
-  }
-
-  if (type === 'htmlAttrs' && addSsrAttribute) {
-    return "".concat(ssrAttribute).concat(attributeStr ? ' ' : '').concat(attributeStr);
-  }
-
-  return attributeStr;
-}
-
-/**
- * Generates title output for the server
- *
- * @param  {'title'} type - the string "title"
- * @param  {String} data - the title text
- * @return {Object} - the title generator
- */
-function titleGenerator(options, type, data, generatorOptions) {
-  var _ref = generatorOptions || {},
-      ln = _ref.ln;
-
-  if (!data) {
-    return '';
-  }
-
-  return "<".concat(type, ">").concat(data, "</").concat(type, ">").concat(ln ? '\n' : '');
-}
-
-/**
- * Generates meta, base, link, style, script, noscript tags for use on the server
- *
- * @param  {('meta'|'base'|'link'|'style'|'script'|'noscript')} the name of the tag
- * @param  {(Array<Object>|Object)} tags - an array of tag objects or a single object in case of base
- * @return {Object} - the tag generator
- */
-
-function tagGenerator(options, type, tags, generatorOptions) {
-  var _ref = options || {},
-      ssrAppId = _ref.ssrAppId,
-      attribute = _ref.attribute,
-      tagIDKeyName = _ref.tagIDKeyName;
-
-  var _ref2 = generatorOptions || {},
-      appId = _ref2.appId,
-      _ref2$isSSR = _ref2.isSSR,
-      isSSR = _ref2$isSSR === void 0 ? true : _ref2$isSSR,
-      _ref2$body = _ref2.body,
-      body = _ref2$body === void 0 ? false : _ref2$body,
-      _ref2$pbody = _ref2.pbody,
-      pbody = _ref2$pbody === void 0 ? false : _ref2$pbody,
-      _ref2$ln = _ref2.ln,
-      ln = _ref2$ln === void 0 ? false : _ref2$ln;
-
-  var dataAttributes = [tagIDKeyName].concat(_toConsumableArray(commonDataAttributes));
-
-  if (!tags || !tags.length) {
-    return '';
-  } // build a string containing all tags of this type
-
-
-  return tags.reduce(function (tagsStr, tag) {
-    if (tag.skip) {
-      return tagsStr;
-    }
-
-    var tagKeys = Object.keys(tag);
-
-    if (tagKeys.length === 0) {
-      return tagsStr; // Bail on empty tag object
-    }
-
-    if (Boolean(tag.body) !== body || Boolean(tag.pbody) !== pbody) {
-      return tagsStr;
-    }
-
-    var attrs = tag.once ? '' : " ".concat(attribute, "=\"").concat(appId || (isSSR === false ? '1' : ssrAppId), "\""); // build a string containing all attributes of this tag
-
-    for (var attr in tag) {
-      // these attributes are treated as children on the tag
-      if (tagAttributeAsInnerContent.includes(attr) || tagProperties.includes(attr)) {
-        continue;
-      }
-
-      if (attr === 'callback') {
-        attrs += ' onload="this.__vm_l=1"';
-        continue;
-      } // these form the attribute list for this tag
-
-
-      var prefix = '';
-
-      if (dataAttributes.includes(attr)) {
-        prefix = 'data-';
-      }
-
-      var isBooleanAttr = !prefix && booleanHtmlAttributes.includes(attr);
-
-      if (isBooleanAttr && !tag[attr]) {
-        continue;
-      }
-
-      attrs += " ".concat(prefix).concat(attr) + (isBooleanAttr ? '' : "=\"".concat(tag[attr], "\""));
-    }
-
-    var json = '';
-
-    if (tag.json) {
-      json = JSON.stringify(tag.json);
-    } // grab child content from one of these attributes, if possible
-
-
-    var content = tag.innerHTML || tag.cssText || json; // generate tag exactly without any other redundant attribute
-    // these tags have no end tag
-
-    var hasEndTag = !tagsWithoutEndTag.includes(type); // these tag types will have content inserted
-
-    var hasContent = hasEndTag && tagsWithInnerContent.includes(type); // the final string for this specific tag
-
-    return "".concat(tagsStr, "<").concat(type).concat(attrs).concat(!hasContent && hasEndTag ? '/' : '', ">") + (hasContent ? "".concat(content, "</").concat(type, ">") : '') + (ln ? '\n' : '');
-  }, '');
-}
-
-/**
- * Converts a meta info property to one that can be stringified on the server
- *
- * @param  {String} type - the type of data to convert
- * @param  {(String|Object|Array<Object>)} data - the data value
- * @return {Object} - the new injector
- */
-
-function generateServerInjector(options, metaInfo, globalInjectOptions) {
-  var serverInjector = {
-    data: metaInfo,
-    extraData: undefined,
-    addInfo: function addInfo(appId, metaInfo) {
-      this.extraData = this.extraData || {};
-      this.extraData[appId] = metaInfo;
-    },
-    callInjectors: function callInjectors(opts) {
-      var m = this.injectors; // only call title for the head
-
-      return (opts.body || opts.pbody ? '' : m.title.text(opts)) + m.meta.text(opts) + m.base.text(opts) + m.link.text(opts) + m.style.text(opts) + m.script.text(opts) + m.noscript.text(opts);
-    },
-    injectors: {
-      head: function head(ln) {
-        return serverInjector.callInjectors(_objectSpread2(_objectSpread2({}, globalInjectOptions), {}, {
-          ln: ln
-        }));
-      },
-      bodyPrepend: function bodyPrepend(ln) {
-        return serverInjector.callInjectors(_objectSpread2(_objectSpread2({}, globalInjectOptions), {}, {
-          ln: ln,
-          pbody: true
-        }));
-      },
-      bodyAppend: function bodyAppend(ln) {
-        return serverInjector.callInjectors(_objectSpread2(_objectSpread2({}, globalInjectOptions), {}, {
-          ln: ln,
-          body: true
-        }));
-      }
-    }
-  };
-
-  var _loop = function _loop(type) {
-    if (metaInfoOptionKeys.includes(type)) {
-      return "continue";
-    }
-
-    serverInjector.injectors[type] = {
-      text: function text(injectOptions) {
-        var addSsrAttribute = injectOptions === true;
-        injectOptions = _objectSpread2(_objectSpread2({
-          addSsrAttribute: addSsrAttribute
-        }, globalInjectOptions), injectOptions);
-
-        if (type === 'title') {
-          return titleGenerator(options, type, serverInjector.data[type], injectOptions);
-        }
-
-        if (metaInfoAttributeKeys.includes(type)) {
-          var attributeData = {};
-          var data = serverInjector.data[type];
-
-          if (data) {
-            var appId = injectOptions.isSSR === false ? '1' : options.ssrAppId;
-
-            for (var attr in data) {
-              attributeData[attr] = _defineProperty({}, appId, data[attr]);
-            }
-          }
-
-          if (serverInjector.extraData) {
-            for (var _appId in serverInjector.extraData) {
-              var _data = serverInjector.extraData[_appId][type];
-
-              if (_data) {
-                for (var _attr in _data) {
-                  attributeData[_attr] = _objectSpread2(_objectSpread2({}, attributeData[_attr]), {}, _defineProperty({}, _appId, _data[_attr]));
-                }
-              }
-            }
-          }
-
-          return attributeGenerator(options, type, attributeData, injectOptions);
-        }
-
-        var str = tagGenerator(options, type, serverInjector.data[type], injectOptions);
-
-        if (serverInjector.extraData) {
-          for (var _appId2 in serverInjector.extraData) {
-            var _data2 = serverInjector.extraData[_appId2][type];
-            var extraStr = tagGenerator(options, type, _data2, _objectSpread2({
-              appId: _appId2
-            }, injectOptions));
-            str = "".concat(str).concat(extraStr);
-          }
-        }
-
-        return str;
-      }
-    };
-  };
-
-  for (var type in defaultInfo) {
-    var _ret = _loop(type);
-
-    if (_ret === "continue") continue;
-  }
-
-  return serverInjector;
-}
-
-/**
- * Converts the state of the meta info object such that each item
- * can be compiled to a tag string on the server
- *
- * @vm {Object} - Vue instance - ideally the root component
- * @return {Object} - server meta info with `toString` methods
- */
-
-function inject(rootVm, options, injectOptions) {
-  // make sure vue-meta was initiated
-  if (!rootVm[rootConfigKey]) {
-    showWarningNotSupported();
-    return {};
-  } // collect & aggregate all metaInfo $options
-
-
-  var rawInfo = getComponentMetaInfo(options, rootVm);
-  var metaInfo = getMetaInfo(options, rawInfo, serverSequences, rootVm); // generate server injector
-
-  var serverInjector = generateServerInjector(options, metaInfo, injectOptions); // add meta info from additional apps
-
-  var appsMetaInfo = getAppsMetaInfo();
-
-  if (appsMetaInfo) {
-    for (var additionalAppId in appsMetaInfo) {
-      serverInjector.addInfo(additionalAppId, appsMetaInfo[additionalAppId]);
-      delete appsMetaInfo[additionalAppId];
-    }
-
-    clearAppsMetaInfo(true);
-  }
-
-  return serverInjector.injectors;
-}
-
-function $meta(options) {
-  options = options || {};
-  /**
-   * Returns an injector for server-side rendering.
-   * @this {Object} - the Vue instance (a root component)
-   * @return {Object} - injector
-   */
-
-  var $root = this.$root;
-  return {
-    getOptions: function getOptions$1() {
-      return getOptions(options);
-    },
-    setOptions: function setOptions(newOptions) {
-      var refreshNavKey = 'refreshOnceOnNavigation';
-
-      if (newOptions && newOptions[refreshNavKey]) {
-        options.refreshOnceOnNavigation = !!newOptions[refreshNavKey];
-        addNavGuards($root);
-      }
-
-      var debounceWaitKey = 'debounceWait';
-
-      if (newOptions && debounceWaitKey in newOptions) {
-        var debounceWait = parseInt(newOptions[debounceWaitKey]);
-
-        if (!isNaN(debounceWait)) {
-          options.debounceWait = debounceWait;
-        }
-      }
-
-      var waitOnDestroyedKey = 'waitOnDestroyed';
-
-      if (newOptions && waitOnDestroyedKey in newOptions) {
-        options.waitOnDestroyed = !!newOptions[waitOnDestroyedKey];
-      }
-    },
-    refresh: function refresh$1() {
-      return refresh($root, options);
-    },
-    inject: function inject$1(injectOptions) {
-      return  inject($root, options, injectOptions) ;
-    },
-    pause: function pause$1() {
-      return pause($root);
-    },
-    resume: function resume$1() {
-      return resume($root);
-    },
-    addApp: function addApp$1(appId) {
-      return addApp($root, appId, options);
-    }
-  };
-}
-
-function generate(rawInfo, options) {
-  options = setOptions(options);
-  var metaInfo = getMetaInfo(options, rawInfo, serverSequences);
-  var serverInjector = generateServerInjector(options, metaInfo);
-  return serverInjector.injectors;
-}
-
-/**
- * Plugin install function.
- * @param {Function} Vue - the Vue constructor.
- */
-
-function install(Vue, options) {
-  if (Vue.__vuemeta_installed) {
-    return;
-  }
-
-  Vue.__vuemeta_installed = true;
-  options = setOptions(options);
-
-  Vue.prototype.$meta = function () {
-    return $meta.call(this, options);
-  };
-
-  Vue.mixin(createMixin(Vue, options));
-}
-
-var index = {
-  version: version,
-  install: install,
-  generate: function generate$1(metaInfo, options) {
-    return  generate(metaInfo, options) ;
-  },
-  hasMetaInfo: hasMetaInfo
-};
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (index);
 
 
 /***/ }),

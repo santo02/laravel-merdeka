@@ -47,7 +47,7 @@ class productController extends Controller
         $p->terjual = $request->terjual;
         $p->deskripsi_product = $request->deskripsi;
         $p->kategori_id = $request->kategori;
-        $p->gambar = $path;
+        $p->gambar = "gambar";
         $p->save();
 
         return redirect()->route('index-product')

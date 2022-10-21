@@ -21,7 +21,7 @@
                             <a class="nav-link text-dark" :href="`#trending`">Trending</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" :href="`/#pria`">Pria</a>
+                            <a class="nav-link text-dark" :href="`#pria`">Pria</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" :href="`#wanita`">Wanita</a>

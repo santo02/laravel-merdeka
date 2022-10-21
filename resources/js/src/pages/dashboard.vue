@@ -3,48 +3,51 @@
         <div class="row">
             <div class="col-md-7">
                 <div class="form">
-                    <!-- @if ($message = Session::get('success'))
-                    <div class="alert alert-success">
-                        <p>{{ $message }}</p>
-                    </div>
-                    @endif -->
-                    <a>Lihat semua product</a>
+                    <a>
+                        <router-link class="nav-link" :to="{name: 'product'}">
+                            Lihat semua product
+                        </router-link>
+                    </a>
                     <h1>Tambah Product </h1>
-                    <form  method="POST" enctype="multipart/form-data">
-                        <!-- @csrf -->
+                    <form @submit.prevent="store" method="post" enctype="multipart/form-data" id="form">
                         <div class="mb-3">
                             <label for="nama" class="form-label">Nama Product</label>
-                            <input type="text" class="form-control" name="nama" id="nama">
+                            <input type="text" class="form-control" v-model="products.nama" name="nama">
                         </div>
                         <div class="mb-3">
                             <label for="harga" class="form-label">Harga Product</label>
-                            <input type="number" class="form-control" name="harga" id="harga">
+                            <input type="number" class="form-control" v-model="products.harga" name="harga">
                         </div>
                         <div class="mb-3">
                             <label for="stok" class="form-label">Stok Product</label>
-                            <input type="number" class="form-control" name="stok" id="stok">
+                            <input type="number" class="form-control" v-model="products.stok" nama="stok">
                         </div>
                         <div class="mb-3">
                             <label for="terjual" class="form-label">Terjual Product</label>
-                            <input type="number" class="form-control" name="terjual" id="terjual">
+                            <input type="number" class="form-control" v-model="products.terjual" nama="terjual">
                         </div>
                         <div class="mb-3">
                             <label for="deskripsi" class="form-label">Deskripsi Product</label>
-                            <textarea name="deskripsi" class="form-control"></textarea>
+                            <textarea v-model="products.deskripsi" class="form-control" name="deskripsi"></textarea>
                         </div>
-                        <!-- <div class="mb-3">
+                        <div class="mb-3">
                             <label for="kategori" class="form-label">Kategori Product</label>
-                            <select class="form-select" name="kategori" aria-label="Default select example">
+                            <select class="form-select" v-model="products.kategori" name="kategori"
+                                aria-label="Default select example">
                                 <option selected>Pilih Kategori</option>
-                                @foreach ($kategori as $k)
-                                <option value="{{ $k->id }}">{{ $k->nama }}</option>
-                                @endforeach
+                                <option v-for="k in kategori" :key="k.id" :value="`${k.id}`">{{k.nama}}</option>
 
                             </select>
-                        </div> -->
+                        </div>
                         <div class="mb-3">
                             <label for="gambar" class="form-label">Gambar Product</label>
-                            <input type="file" class="form-control" name="gambar" id="gambar">
+                            <div v-if="preview == null">
+                                <img :src="preview" v-bind:style="{'display': 'none'}">
+                            </div>
+                            <div v-else>
+                                <img :src="preview" class="img-thumbnail" height="300px" width="300px">
+                            </div>
+                            <input type="file" class="form-control" @change="filegambar" name="gambar" id="gambar">
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
@@ -52,28 +55,78 @@
             </div>
             <div class="col-md-5">
                 <div class="form">
-                    <!-- v-if ($message = Session::get('k-success'))
-                    <div class="alert alert-success">
-                        <p>{{ $message }}</p>
-                    </div>
-                    @endif -->
                     <a>Lihat semua kategori</a>
                     <h1>Tambah kategori </h1>
-                    <form  method="POST" enctype="multipart/form-data">
-                        <!-- @csrf -->
-                        <div class="mb-3">
-                            <label for="nama" class="form-label">Nama kategory</label>
-                            <input type="text" class="form-control" name="nama" id="nama">
-                        </div>
-                        <div class="mb-3"><button type="submit" class="btn btn-primary ">Submit</button></div>
-                    </form>
+                    <!-- <form method="POST" enctype="multipart/form-data"> -->
+                    <!-- @csrf -->
+                    <div class="mb-3">
+                        <label for="nama" class="form-label">Nama kategory</label>
+                        <input type="text" class="form-control" name="nama" id="nama">
+                    </div>
+                    <div class="mb-3"><button type="submit" class="btn btn-primary ">Submit</button></div>
+                    <!-- </form> -->
                 </div>
             </div>
         </div>
     </div>
 </template>
 <script>
+import axios from 'axios';
+
 export default {
-    metaInfo: { title: 'Converse | Dashboard' }
+    metaInfo: { title: 'Converse | Dashboard' },
+    data() {
+        return {
+
+            kategori: [],
+            products: {},
+            preview: null,
+            image: null,
+        }
+    },
+
+    methods: {
+        showKategori() {
+            axios.get('api/kategori')
+                .then(response => {
+                    this.kategori = response.data;
+                });
+        },
+
+        filegambar(event) {
+            // console.log('gambar')
+            this.image = event.target.files[0];
+            //mengubah file menjadi URL
+            this.preview = URL.createObjectURL(this.image);
+        },
+
+        store() {
+            const form = document.getElementById('form');
+
+            let formData = new FormData()
+            formData.append('gambar', this.image)
+
+            _.each(this.products, (value, key) => {
+                formData.append(key, value)
+
+            })
+            axios.post('/api/add-product', formData)
+                .then(response => {
+                    event.preventDefault();
+
+                    form.reset();
+                    console.log(response.data);
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        },
+
+
+    },
+
+    mounted() {
+        this.showKategori();
+    }
 }
 </script>

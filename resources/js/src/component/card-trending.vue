@@ -3,7 +3,7 @@
         <h2 class="m-4">{{kategori}} Styles</h2>
         <div class="bag1 row d-flex justify-content-around">
             <div v-for="trending in trendings" :key="trending.id" class="card col-md-3 m-2" style="width: 18rem;">
-                <img :src="`${trending.gambar}`" class="card-img-top" alt="...">
+                <img :src="'/images/'+ trending.gambar" class="card-img-top" alt="...">
                 <div class="card-body">
                     <b>
                         <p class="card-text">{{ trending.nama_product }} ({{trending.nama}})</p>
