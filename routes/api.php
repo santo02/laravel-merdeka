@@ -31,3 +31,4 @@ Route::post('add-product', [ProductControllerCRUD::class, 'store']);
 Route::get('product/show', [ProductControllerCRUD::class, 'index']);
 Route::get('product/edit/{id}', [ProductControllerCRUD::class, 'edit']);
 Route::post('product/update/{id}', [ProductControllerCRUD::class, 'update']);
+Route::delete('product/delete/{id}', [ProductControllerCRUD::class, 'delete']);

@@ -3,11 +3,9 @@
         <div class="row">
             <div class="col-md-7">
                 <div class="form">
-                    <a>
-                        <router-link class="nav-link" :to="{name: 'product'}">
-                            Lihat semua product
-                        </router-link>
-                    </a>
+                    <router-link :to="{ name: 'product' }">
+                        Lihat semua product
+                    </router-link>
                     <h1>Tambah Product </h1>
                     <form @submit.prevent="store" method="post" enctype="multipart/form-data" id="form">
                         <div class="mb-3">
@@ -35,14 +33,14 @@
                             <select class="form-select" v-model="products.kategori" name="kategori"
                                 aria-label="Default select example">
                                 <option selected>Pilih Kategori</option>
-                                <option v-for="k in kategori" :key="k.id" :value="`${k.id}`">{{k.nama}}</option>
+                                <option v-for="k in kategori" :key="k.id" :value="`${k.id}`">{{ k.nama }}</option>
 
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="gambar" class="form-label">Gambar Product</label>
                             <div v-if="preview == null">
-                                <img :src="preview" v-bind:style="{'display': 'none'}">
+                                <img :src="preview" v-bind:style="{ 'display': 'none' }">
                             </div>
                             <div v-else>
                                 <img :src="preview" class="img-thumbnail" height="300px" width="300px">
@@ -55,10 +53,10 @@
             </div>
             <div class="col-md-5">
                 <div class="form">
-                    <a>Lihat semua kategori</a>
+                    <router-link class="mt-3" :to="{ name: 'kategori-show' }">
+                        Lihat semua kategori
+                    </router-link>
                     <h1>Tambah kategori </h1>
-                    <!-- <form method="POST" enctype="multipart/form-data"> -->
-                    <!-- @csrf -->
                     <div class="mb-3">
                         <label for="nama" class="form-label">Nama kategory</label>
                         <input type="text" class="form-control" name="nama" id="nama">
@@ -115,7 +113,7 @@ export default {
                     event.preventDefault();
 
                     form.reset();
-                    console.log(response.data);
+                    window.location.reload(true);
                 })
                 .catch(error => {
                     console.log(error)

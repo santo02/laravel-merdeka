@@ -108,8 +108,15 @@ class ProductControllerCRUD extends Controller
         //         'gambar' => $request->gambar
         //     ]);
         // }
-            return response()->json([
-                'message' => "The product successfully updated",
-            ]);
+        return response()->json([
+            'message' => "The product successfully updated",
+        ]);
+    }
+    public function delete($id)
+    {
+        $product = product::find($id);
+        $product->delete();
+
+        return response()->json('The product successfully deleted');
     }
 }
