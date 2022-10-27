@@ -57,12 +57,13 @@
                         Lihat semua kategori
                     </router-link>
                     <h1>Tambah kategori </h1>
-                    <div class="mb-3">
-                        <label for="nama" class="form-label">Nama kategory</label>
-                        <input type="text" class="form-control" name="nama" id="nama">
-                    </div>
-                    <div class="mb-3"><button type="submit" class="btn btn-primary ">Submit</button></div>
-                    <!-- </form> -->
+                    <form @submit.prevent="storeKategori">
+                        <div class="mb-3">
+                            <label for="nama" class="form-label">Nama kategory</label>
+                            <input type="text" v-model="kategori.nama" class="form-control" name="nama" id="nama">
+                        </div>
+                        <div class="mb-3"><button type="submit" class="btn btn-primary ">Submit</button></div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -77,7 +78,7 @@ export default {
         return {
 
             kategori: [],
-            products: {},
+            products: [],
             preview: null,
             image: null,
         }
@@ -113,11 +114,26 @@ export default {
                     event.preventDefault();
 
                     form.reset();
-                    window.location.reload(true);
+                    console.log(response.data);
                 })
                 .catch(error => {
                     console.log(error)
                 })
+        },
+
+        storeKategori() {
+            const form = document.getElementById('form');
+            let formData = new FormData()
+
+            _.each(this.kategori, (value, key) => {
+                formData.append(key, value)
+            })
+            axios.post('/api/add-kategori', this.kategori)
+                .then(response => {
+                    form.reset();
+                    window.location.reload(true);
+                })
+                .catch(error => console.log(error))
         },
 
 

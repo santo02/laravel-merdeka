@@ -26,9 +26,13 @@ Route::get('Product-pria', [ProductController::class, 'pria']);
 Route::get('Product-wanita', [ProductController::class, 'wanita']);
 Route::get('Product-trending', [ProductController::class, 'trending']);
 
-Route::get('kategori', [KategoriController::class, 'showKategori']);
+
 Route::post('add-product', [ProductControllerCRUD::class, 'store']);
 Route::get('product/show', [ProductControllerCRUD::class, 'index']);
 Route::get('product/edit/{id}', [ProductControllerCRUD::class, 'edit']);
 Route::post('product/update/{id}', [ProductControllerCRUD::class, 'update']);
 Route::delete('product/delete/{id}', [ProductControllerCRUD::class, 'delete']);
+
+
+Route::get('kategori', [KategoriController::class, 'showKategori']);
+Route::post('add-kategori', [KategoriController::class, 'store']);
