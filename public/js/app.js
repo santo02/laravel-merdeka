@@ -2355,7 +2355,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       kategori: [],
-      products: [],
+      products: {},
       preview: null,
       image: null
     };
@@ -2386,7 +2386,6 @@ __webpack_require__.r(__webpack_exports__);
       axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/add-product', formData).then(function (response) {
         event.preventDefault();
         form.reset();
-        console.log(response.data);
       })["catch"](function (error) {
         console.log(error);
       });
@@ -2394,12 +2393,8 @@ __webpack_require__.r(__webpack_exports__);
     storeKategori: function storeKategori() {
       var form = document.getElementById('form');
       var formData = new FormData();
-
-      _.each(this.kategori, function (value, key) {
-        formData.append(key, value);
-      });
-
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/add-kategori', this.kategori).then(function (response) {
+      formData.append('nama', this.kategori.nama);
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/add-kategori', formData).then(function (response) {
         form.reset();
         window.location.reload(true);
       })["catch"](function (error) {
@@ -3166,7 +3161,7 @@ var render = function render() {
         name: "product"
       }
     }
-  }, [_vm._v("\n                    Lihat semua product\n                ")]), _vm._v(" "), _c("h1", [_vm._v("Tambah Product ")]), _vm._v(" "), _c("form", {
+  }, [_vm._v("\n                        Lihat semua product\n                    ")]), _vm._v(" "), _c("h1", [_vm._v("Tambah Product ")]), _vm._v(" "), _c("form", {
     attrs: {
       method: "post",
       enctype: "multipart/form-data",
@@ -3899,7 +3894,7 @@ var render = function render() {
     }
   }, [_vm._v("\n            Kembali\n        ")]), _vm._v(" "), _vm.product.length == 0 ? _c("div", [_c("h3", {
     staticClass: "text-center"
-  }, [_vm._v("Product Kosong!!")])]) : _c("div", _vm._l(_vm.product, function (pro) {
+  }, [_vm._v("Product Kosong!!")])]) : _vm._e(), _vm._v(" "), _vm._l(_vm.product, function (pro) {
     return _c("div", {
       key: pro.id,
       staticClass: "card col-lg-3 m-2 mt-4",
@@ -3943,7 +3938,7 @@ var render = function render() {
       attrs: {
         "aria-hidden": "true"
       }
-    }), _vm._v(" Edit\n                            ")])], 1), _vm._v(" "), _c("div", {
+    }), _vm._v(" Edit\n                        ")])], 1), _vm._v(" "), _c("div", {
       staticClass: "col"
     }, [_c("button", {
       staticClass: "btn btn-danger",
@@ -3953,7 +3948,7 @@ var render = function render() {
       }
     }, [_c("i", {
       staticClass: "fa fa-trash"
-    }), _vm._v(" Hapus\n                            ")])]), _vm._v(" "), _c("div", {
+    }), _vm._v(" Hapus\n                        ")])]), _vm._v(" "), _c("div", {
       staticClass: "modal fade",
       attrs: {
         id: "deleteProduct" + pro.id,
@@ -3967,7 +3962,7 @@ var render = function render() {
       staticClass: "modal-content"
     }, [_vm._m(0, true), _vm._v(" "), _c("div", {
       staticClass: "modal-body"
-    }, [_vm._v("\n                                        Apakah anda ingin menghapus "), _c("b", [_vm._v(_vm._s(pro.nama_product))]), _vm._v("?\n                                    ")]), _vm._v(" "), _c("div", {
+    }, [_vm._v("\n                                    Apakah anda ingin menghapus "), _c("b", [_vm._v(_vm._s(pro.nama_product))]), _vm._v("?\n                                ")]), _vm._v(" "), _c("div", {
       staticClass: "modal-footer"
     }, [_c("button", {
       staticClass: "btn btn-primary",
@@ -3986,7 +3981,7 @@ var render = function render() {
         }
       }
     }, [_vm._v("Ya")])])])])])])])])]);
-  }), 0)], 1)]);
+  })], 2)]);
 };
 
 var staticRenderFns = [function () {

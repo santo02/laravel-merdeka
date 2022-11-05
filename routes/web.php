@@ -22,7 +22,7 @@ Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('kelola-product', [productController::class, 'index'])->name('index-product');
 Route::get('show-product', [productController::class, 'show'])->name('show-product');
 Route::post('/edit-product/{id}', [productController::class, 'update'])->name('edit-product');
-Route::post('add-product', [productController::class, 'store'])->name('add-product');
+// Route::post('add-product', [productController::class, 'store'])->name('add-product');
 Route::get('/delete-product/{id}', [productController::class, 'destroy'])->name('delete-product');
 
 Route::post('add-kategori', [kategoriController::class, 'store'])->name('add-kategori');

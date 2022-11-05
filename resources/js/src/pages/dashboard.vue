@@ -3,9 +3,9 @@
         <div class="row">
             <div class="col-md-7">
                 <div class="form">
-                    <router-link :to="{ name: 'product' }">
-                        Lihat semua product
-                    </router-link>
+                        <router-link :to="{   name: 'product'   }">
+                            Lihat semua product
+                        </router-link>
                     <h1>Tambah Product </h1>
                     <form @submit.prevent="store" method="post" enctype="multipart/form-data" id="form">
                         <div class="mb-3">
@@ -33,14 +33,14 @@
                             <select class="form-select" v-model="products.kategori" name="kategori"
                                 aria-label="Default select example">
                                 <option selected>Pilih Kategori</option>
-                                <option v-for="k in kategori" :key="k.id" :value="`${k.id}`">{{ k.nama }}</option>
+                                <option v-for="k in kategori" :key="k.id" :value="`${k.id}`">{{   k.nama   }}</option>
 
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="gambar" class="form-label">Gambar Product</label>
                             <div v-if="preview == null">
-                                <img :src="preview" v-bind:style="{ 'display': 'none' }">
+                                <img :src="preview" v-bind:style="{   'display': 'none'   }">
                             </div>
                             <div v-else>
                                 <img :src="preview" class="img-thumbnail" height="300px" width="300px">
@@ -78,7 +78,7 @@ export default {
         return {
 
             kategori: [],
-            products: [],
+            products: {},
             preview: null,
             image: null,
         }
@@ -112,23 +112,18 @@ export default {
             axios.post('/api/add-product', formData)
                 .then(response => {
                     event.preventDefault();
-
                     form.reset();
-                    console.log(response.data);
                 })
                 .catch(error => {
                     console.log(error)
                 })
         },
-
         storeKategori() {
             const form = document.getElementById('form');
             let formData = new FormData()
+            formData.append('nama', this.kategori.nama)
 
-            _.each(this.kategori, (value, key) => {
-                formData.append(key, value)
-            })
-            axios.post('/api/add-kategori', this.kategori)
+            axios.post('/api/add-kategori', formData)
                 .then(response => {
                     form.reset();
                     window.location.reload(true);
